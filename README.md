@@ -2,15 +2,15 @@
 # [A2] Island ca.mcmaster.se2aa4.island.team00.Explorer
 
 - Authors:
-  - [Firstname_1, Lastname_1](macid@mcmaster.ca) 
-  - [Firstname_2, Lastname_2](macid@mcmaster.ca)
-  - [Firstname_3, Lastname_3](macid@mcmaster.ca)
+  - [Hareem, Salman](salmah10@mcmaster.ca) 
+  - [Vivian, Nguyen](nguyev74@mcmaster.ca)
+  - [Meena, Al-Omran](alomram@mcmaster.ca)
 
 ## Product Description
 
 This product is an _exploration command center_ for the [Island](https://ace-design.github.io/island/) serious game. 
 
-- The `ca.mcmaster.se2aa4.island.team_XXX_.Explorer` class implements the command center, used to compete with the others. (XXX being the team identifier)
+- The `ca.mcmaster.se2aa4.island.team_216_.Explorer` class implements the command center, used to compete with the others. (XXX being the team identifier)
 - The `Runner` class allows one to run the command center on a specific map.
 
 ### Strategy description
