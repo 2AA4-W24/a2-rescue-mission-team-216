@@ -4,7 +4,7 @@
 - Authors:
   - [Hareem, Salman](salmah10@mcmaster.ca) 
   - [Vivian, Nguyen](nguyev74@mcmaster.ca)
-  - [Meena, Al-Omran](alomram@mcmaster.ca)
+  - [Meena, Al Omran](alomram@mcmaster.ca)
 
 ## Product Description
 
