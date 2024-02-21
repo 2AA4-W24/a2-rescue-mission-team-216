@@ -15,6 +15,9 @@ public class Explorer implements IExplorerRaid {
     private boolean i = true;
     private Integer range = 0;
     private String found = "";
+    private int counter = 0;
+    private int j = 5;
+    private int k = 5;
 
     @Override
     public void initialize(String s) {
@@ -31,11 +34,27 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
-        if (i) {
+        /*if (i) {
             decision.put("parameters", parameters.put("direction", "E"));
             decision.put("action", "echo");
         } else {
             if (range >= 1) decision.put("action", "fly");
+            else decision.put("action","stop");
+        }*/
+        if (j > 0) {
+            decision.put("action", "fly");
+        } else if (j == 0) {
+            decision.put("parameters", parameters.put("direction", "S"));
+            decision.put("action", "heading");
+        }
+        else if (j == -1){
+            decision.put("parameters", parameters.put("direction", "W"));
+            decision.put("action", "heading");
+        } else {
+            if (k > 0) {
+                decision.put("action","fly");
+                k--;
+            }
             else decision.put("action","stop");
         }
         logger.info("** Decision: {}",decision.toString());
@@ -53,11 +72,12 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
-        if (i) {
+        j--;
+
+        /*if (i) {
             range = extraInfo.getInt("range");
             found = extraInfo.getString("found");
-        }
-        i = !i;
+        i = !i;*/
     }
 
     @Override
