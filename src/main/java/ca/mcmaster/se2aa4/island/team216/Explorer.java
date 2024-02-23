@@ -12,14 +12,11 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
-    private boolean i = true;
     private Integer range = 0;
     private String found = "";
     private int j = 5;
     private int k = 5;
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
-
-
 
     @Override
     public void initialize(String s) {
@@ -57,7 +54,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
-        j--;
+        //j--;
     }
 
     @Override
