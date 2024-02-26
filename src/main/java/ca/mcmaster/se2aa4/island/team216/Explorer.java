@@ -12,15 +12,18 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
-    private boolean i = true;
     private Integer range = 0;
     private String found = "";
     private int j = 5;
     private int k = 5;
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
 
+<<<<<<< HEAD
 
 
+=======
+    @Override
+>>>>>>> 010665d4e9425e3152eb93b36a3be361ac68716c
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
@@ -60,7 +63,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
-        j--;
+        //j--;
     }
 
     @Override

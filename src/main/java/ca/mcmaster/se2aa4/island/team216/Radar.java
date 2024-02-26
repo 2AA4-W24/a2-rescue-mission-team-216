@@ -8,9 +8,11 @@ public class Radar {
 
     private String Decision = "";
     private final Logger logger = LogManager.getLogger();
+    private int c = 0;
 
     public String getDecision(int j, int k, JSONObject decision) {
-        detection(j, k, decision);
+        //detection(j, k, decision);
+        detect2(decision);
         return Decision;
     }
 
@@ -37,4 +39,28 @@ public class Radar {
         Decision = decision.toString();
     }
 
+<<<<<<< HEAD
+=======
+    private void detect2(JSONObject decision) {
+        JSONObject parameters = new JSONObject();
+        if (c == 0) {
+            decision.put("parameters", parameters.put("direction", "E")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        } else if (c == 1) {
+            decision.put("parameters", parameters.put("direction", "N")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        }
+        else if (c == 2) {
+            decision.put("parameters", parameters.put("direction", "S")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        } else {
+            decision.put("action","fly");
+            c=0;
+        }
+        Decision = decision.toString();
+    }
+>>>>>>> 010665d4e9425e3152eb93b36a3be361ac68716c
 }
