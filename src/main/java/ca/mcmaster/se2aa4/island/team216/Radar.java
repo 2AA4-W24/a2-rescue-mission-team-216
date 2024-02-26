@@ -1,69 +1,63 @@
 package ca.mcmaster.se2aa4.island.team216;
 
-import org.json.JSONObject;
-
-package ca.mcmaster.se2aa4.island.team216;
-
-import java.io.StringReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import eu.ace_design.island.bot.IExplorerRaid;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-public class Radar{
-
-// get coordinate and direction, check in front, right and left
-}
-public class Direction {
-    private int direction;
-    private static final int NORTH =0;
-    private static final int EAST =1;
-    private static final int SOUTH =2;
-    private static final int WEST =3;
-    public static final int VALID = 1;
-    public static final int INVALID = 2;
-
-
-
-
-public class Explorer implements IExplorerRaid {
-    private JSONObject info;
-    private final Logger logger = LogManager.getLogger();
-
-
-    @Override
-    public void initialize(String s) {
-        info = new JSONObject(new JSONTokener(new StringReader(s)));
-        String direction = info.getString("heading");
-        Integer batteryLevel = info.getInt("budget");
-        logger.info("The drone is facing {}", direction);
-        logger.info("Battery level is {}", batteryLevel);
-    }
-
-    public static void checkDirection(String s){
-        if(dire)
-
-
-    }
-}
 public class Radar {
-// sends an echo signal. if the signal answers OUT_OF_RANge - indicates number of cells away there is no land in this direction
-    // if it bounces back, answers with GROUND and indicates the number of  cells away
 
-    //create detect method
-    //
+    private String Decision = "";
+    private final Logger logger = LogManager.getLogger();
+    private int c = 0;
 
-    JSONObject decision = new JSONObject();
-
-        if(.equals("GROUND")){
-        decision.put("action", "stop"); // we stop the exploration immediately
+    public String getDecision(int j, int k, JSONObject decision) {
+        //detection(j, k, decision);
+        detect2(decision);
+        return Decision;
     }
 
+    private void detection(int j, int k, JSONObject decision){
 
+        JSONObject parameters = new JSONObject();
+
+        if (j > 0) {
+            decision.put("action", "fly"); //if within range, make the drone fly
+        } else if (j == 0) {
+            decision.put("parameters", parameters.put("direction", "S")); //change the direction
+            decision.put("action", "heading");
+        } else if (j == -1) {
+            decision.put("parameters", parameters.put("direction", "W")); //change the direction
+            decision.put("action", "heading");
+        } else {
+            if (k > 0) {
+                decision.put("action", "fly");
+                k--;
+            } else decision.put("action", "stop");
+        }
+
+        logger.info("** Decision: {}", decision.toString());
+        Decision = decision.toString();
+    }
+
+    private void detect2(JSONObject decision) {
+        JSONObject parameters = new JSONObject();
+        if (c == 0) {
+            decision.put("parameters", parameters.put("direction", "E")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        } else if (c == 1) {
+            decision.put("parameters", parameters.put("direction", "N")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        }
+        else if (c == 2) {
+            decision.put("parameters", parameters.put("direction", "S")); //change the direction
+            decision.put("action", "echo");
+            c+=1;
+        } else {
+            decision.put("action","fly");
+            c=0;
+        }
+        Decision = decision.toString();
+    }
 }
-// get direction facing from Drone class
-//
-
-    // to do this : create method to check the direction
