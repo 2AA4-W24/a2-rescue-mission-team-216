@@ -39,6 +39,7 @@ public class Radar {
         Decision = decision.toString();
     }
 
+<<<<<<< HEAD
     private void detect2(JSONObject decision) {
         JSONObject parameters = new JSONObject();
         if (c == 0) {

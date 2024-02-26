@@ -12,23 +12,31 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
+    private boolean i = true;
     private Integer range = 0;
     private String found = "";
     private int j = 5;
     private int k = 5;
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
 
+
+
     @Override
+
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}", info.toString(2));
-        String direction = info.getString("heading");
-        Integer batteryLevel = info.getInt("budget");
+
+        // Initialize an instance of the Drone class
+        Drone drone = new Drone(s);
+
+        // Get the direction and battery level from the Drone object
+        String direction = drone.getDirection();
+        Integer batteryLevel = drone.getBatteryLevel();
+
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
-
-
     }
 
     @Override
@@ -54,7 +62,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
-        //j--;
+        j--;
     }
 
     @Override
