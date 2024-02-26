@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class Explorer implements IExplorerRaid {
-public JSONObject info;
+private JSONObject info;
     private final Logger logger = LogManager.getLogger();
 
 
