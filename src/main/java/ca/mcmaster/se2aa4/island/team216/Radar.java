@@ -37,5 +37,4 @@ public class Radar {
         Decision = decision.toString();
     }
 
-
 }
