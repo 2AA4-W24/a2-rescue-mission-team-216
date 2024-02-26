@@ -48,11 +48,11 @@ public class Explorer implements IExplorerRaid {
 
         if (groundLocation){
             //drone.findGround (a method within drone)
-                //if current dir returns ground via radar awesome store range to be used in next phase
-                    //boolean groundLocate to false
-                    //set boolean groundTravel to true
-                    //decision = do nothing I guess u just located the ground and how far it is
-                //if not then decision = change current dir
+            //if current dir returns ground via radar awesome store range to be used in next phase
+            //boolean groundLocate to false
+            //set boolean groundTravel to true
+            //decision = do nothing I guess u just located the ground and how far it is
+            //if not then decision = change current dir
             //return the decision
         }
 
@@ -61,19 +61,19 @@ public class Explorer implements IExplorerRaid {
             //int range = range recieived from previous phase (e.g. 42)
 
             //if range != 0
-                //decision = action fly
-                //range --
+            //decision = action fly
+            //range --
             //else
-                //boolean groundTravel = false
-                //boolean creekLocate = true
+            //boolean groundTravel = false
+            //boolean creekLocate = true
         }
 
         else if (creekLocate){
             //if we are still near perimeter of island
-                //photoscanner checks for creeks
-                //while there are still creeks to be found
-                    //if a creek is found, append to creek array
-                   //decision = action fly
+            //photoscanner checks for creeks
+            //while there are still creeks to be found
+            //if a creek is found, append to creek array
+            //decision = action fly
             //decision = move to get closer to perimeter (direction headed will depend on conditons)
 
             //if all creeks are found bool creekLocate = false and siteLocate=true
@@ -113,6 +113,3 @@ public class Explorer implements IExplorerRaid {
     }
 
 }
-
-
-
