@@ -15,12 +15,12 @@ public class Explorer implements IExplorerRaid {
     private boolean i = true;
     private Integer range = 0;
     private String found = "";
-
     Boolean groundLocation = true;
     Boolean groundTravel = false;
-    Boolean creekLocate = false;
+    Boolean criticalPoint = false;
     Boolean siteLocate = false;
     Boolean goHome = false;
+    JSONObject extraInfo;
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
 
 
@@ -45,9 +45,22 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
+        Integer range=0;
+        JSONObject decision = new JSONObject();
+        String finalDecision = "";
 
         if (groundLocation){
+            if(extraInfo found == "GROUND"){
+                range = extraInfo range
+
+            }
+            else{
+                drone.compass turn left = newDirection;
+                decision.put("parameters", parameters.put("direction", newDirection));
+            }
+
             //drone.findGround (a method within drone)
+
             //if current dir returns ground via radar awesome store range to be used in next phase
             //boolean groundLocate to false
             //set boolean groundTravel to true
@@ -57,18 +70,20 @@ public class Explorer implements IExplorerRaid {
         }
 
         else if (groundTravel) {
-
-            //int range = range recieived from previous phase (e.g. 42)
-
-            //if range != 0
-            //decision = action fly
-            //range --
-            //else
-            //boolean groundTravel = false
-            //boolean creekLocate = true
+            if (range != 0){
+                finalDecision = String.valueOf(decision.put("action", "fly"));
+                range--;
+            }
+            else{
+                groundTravel = false;
+                criticalPoint = true;
+            }
+            return finalDecision;
         }
+        else if (criticalPoint){
 
-        else if (creekLocate){
+            // grid search
+
             //if we are still near perimeter of island
             //photoscanner checks for creeks
             //while there are still creeks to be found
@@ -79,12 +94,6 @@ public class Explorer implements IExplorerRaid {
             //if all creeks are found bool creekLocate = false and siteLocate=true
         }
 
-        else if(siteLocate){
-            //repeat same process as creek locate except you do not need to ensure you are in the perimeter of the island
-            //do island grid search
-            //once creek is found then siteLocate = false goHome = true
-        }
-
         else{
             //uturn
             //action fly
@@ -92,6 +101,7 @@ public class Explorer implements IExplorerRaid {
 
         return "Sorry";
     }
+
 
     @Override
     public void acknowledgeResults(String s) { //takes in the string which is the decision made
@@ -102,7 +112,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
-        JSONObject extraInfo = response.getJSONObject("extras");
+        extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
     }
