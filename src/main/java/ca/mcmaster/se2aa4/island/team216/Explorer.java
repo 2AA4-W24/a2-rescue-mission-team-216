@@ -12,10 +12,10 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
-    private boolean i = true;
     private Integer range = 0;
+    private Integer a = 3; //for echoing in 3 dirs or flying 3 steps
     private String found = "";
-    Boolean groundLocation = false;
+    Boolean groundLocation = true;
     Boolean groundTravel = false;
     Boolean criticalPoint = true;
     Boolean siteLocate = false;
@@ -26,8 +26,6 @@ public class Explorer implements IExplorerRaid {
 
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
     Drone drone;
-
-
 
     @Override
 
@@ -50,103 +48,121 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
+        logger.info("Counter {}", counter);
 
-//        if (groundLocation){
-//            if(extraInfo found == "GROUND"){
-//                range = extraInfo range
-//
-//            }
-//            else{
-//                drone.compass turn left = newDirection;
-//                decision.put("parameters", parameters.put("direction", newDirection));
-//            }
-//
-//            //drone.findGround (a method within drone)
-//
-//            //if current dir returns ground via radar awesome store range to be used in next phase
-//            //boolean groundLocate to false
-//            //set boolean groundTravel to true
-//            //decision = do nothing I guess u just located the ground and how far it is
-//            //if not then decision = change current dir
-//            //return the decision
-//        }
-//
-//        else if (groundTravel) {
-//            if (range != 0){
-//                finalDecision = String.valueOf(decision.put("action", "fly"));
-//                range--;
-//            }
-//            else{
-//                groundTravel = false;
-//                criticalPoint = true;
-//            }
-//            return finalDecision;
-//        }
-//        if (criticalPoint) {
+        if (groundLocation) {
+            switch (counter) {
+                case 0, 5:
+                    String dirr = drone.getDirection(); //current direction
+                    if (a == 3) {
+                        decision.put("parameters", parameters.put("direction", Compass.turnRight(dirr))); //setting the parameter as the right direction
+                        decision.put("action", "echo"); //echo to the right
+                        a--;
+                    } else if (a == 2) {
+                        decision.put("parameters", parameters.put("direction", Compass.turnLeft(dirr))); //setting the parameter as the left direction
+                        decision.put("action", "echo"); //echo to the left
+                        a--;
+                    } else {
+                        decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
+                        decision.put("action", "echo"); //echo forward
+                        a = 3; //reset this counter (a) for next use
+                        counter++; //move to next phase
+                    }
+                    break;
 
-        switch (counter) {
-            case 0:
-                String dirr = drone.getDirection();
-                decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
-                decision = (decision.put("action", "echo")); //echo if you haven't done anything yet
-                counter++;
-                break;
+                case 1, 6:
+                    if (extraInfo.has("found")) { //have to eventually change to account for ground
+                        range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
+                        found = extraInfo.getString("found");
+                        if (found.equals("GROUND")) { //if ground found, fly forward and then move to 10
+                            decision.put("action", "fly");
+                            counter = 10;
+                        }
+                    } //only happens at the very beginning to know how far you can go down the map/check for ground
 
-            case 1, 5:
-                if (extraInfo.has("found")) {
-                    range = extraInfo.getInt("range");
-                }
-                if (range > 0) { //while you are not at the edge of the map
-                    decision.put("action", "fly"); //fly towards the edge of the map
-                    range--;
-                } else {
-                    counter++;
-                }
-                break;
+                    if (range >= 3) { //while you are not 3 squares from the edge of the map
+                        logger.info("Range: {}", range);
+                        decision.put("action", "fly"); //fly towards the edge of the map
+                        range--;
+                        if (range == 3) {
+                            counter++; // once you've reached 3 squares from edge, increment counter so you enter the next phase on the next loop
+                        }
+                    }
+                    break;
 
-            case 2:
-                String blah = drone.getDirection();
-                String dir = Compass.turnRight(blah);
-                decision.put("parameters", parameters.put("direction", dir));
-                decision.put("action", "heading");
-                counter++;
-                break;
+                case 2:
+                    String blah = drone.getDirection(); //current dir
+                    String dir = Compass.turnRight(blah); //dir to right
+                    logger.info("blah {}", blah);
+                    logger.info("dir {}", dir);
+                    //head right
+                    decision.put("parameters", parameters.put("direction", dir));
+                    decision.put("action", "heading");
+                    drone.setDirection(dir);
+                    counter++; //next phase
+                    break;
 
-            case 3,7:
-                Integer c = 2;
-                if (c>0) {
-                    decision.put("action", "fly");
-                    c--;
-                }
-                else{
-                    counter++;
-                }
-                break;
+                case 3, 8:
+                    if (a >= 0) { //fly 3 steps down
+                        decision.put("action", "fly");
+                        a--;
+                        if (a == 0) {
+                            counter++;
+                            a = 3; //when 3 steps away, increment counter for next phase & reset a
+                        }
+                    }
+                    break;
 
-            case 4:
-                String blah2 = drone.getDirection();
-                String dir2 = Compass.turnRight(blah2);
-                decision.put("parameters", parameters.put("direction", dir2));
-                decision.put("action", "heading");
-                counter++;
-                break;
+                case 4:
+                    String blah2 = drone.getDirection(); //current dir
+                    String dir2 = Compass.turnRight(blah2); //dir to right
+                    logger.info("blah {}", blah2);
+                    logger.info("dir {}", dir2);
+                    //head right to complete u-turn
+                    decision.put("parameters", parameters.put("direction", dir2));
+                    decision.put("action", "heading");
+                    drone.setDirection(dir2);
+                    counter++; //next phase
+                    break;
 
-            case 6:
-                String blah3 = drone.getDirection();
-                String dir3 = Compass.turnLeft(blah3);
-                decision.put("parameters", parameters.put("direction", dir3));
-                decision.put("action", "heading");
-                counter++;
-                break;
+                case 7:
+                    String blah3 = drone.getDirection();//current dir
+                    String dir3 = Compass.turnLeft(blah3);//left dir
+                    logger.info("blah {}", blah3);
+                    logger.info("dir {}", dir3);
+                    //
+                    decision.put("parameters", parameters.put("direction", dir3));
+                    decision.put("action", "heading");
+                    drone.setDirection(dir3);
+                    counter++; //next phase
+                    break;
 
+                case 9:
+                    String blah4 = drone.getDirection();//current dir
+                    String dir4 = Compass.turnLeft(blah4);//left dir
+                    logger.info("blah {}", blah4);
+                    logger.info("dir {}", dir4);
+                    //head left to complete u-turn
+                    decision.put("parameters", parameters.put("direction", dir4));
+                    decision.put("action", "heading");
+                    drone.setDirection(dir4);
+                    counter = 0; //next phase
+                    break;
 
-            case 8:
-                String blah4 = drone.getDirection();
-                String dir4 = Compass.turnLeft(blah4);
-                decision.put("parameters", parameters.put("direction", dir4));
-                decision.put("action", "heading");
-                counter=0;
-                break;
+                case 10:
+                    if (range >= 2) { //fly to ground
+                        decision.put("action", "fly");
+                        range--;
+                        if (range == 2) { //when ground reached, stop & set vars accordingly for next phase
+                            decision.put("action", "stop");
+                            groundLocation = false;
+                            groundTravel = true; //technically this phase is case 10, will change later or combine phases
+                        }
+                    }
+                    break;
+            }
+        } else if (groundTravel) {
+            //will refactor moving to ground once it's found to be in this phase (???)
         }
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -164,9 +180,9 @@ public class Explorer implements IExplorerRaid {
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
+        logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-
     }
 
     @Override

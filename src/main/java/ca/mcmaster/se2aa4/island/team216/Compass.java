@@ -13,7 +13,7 @@ public class Compass {
             case "S":
                 return "E";
             case "W":
-                return "N";
+                return "S";
             default:
                 throw new IllegalArgumentException("Invalid direction: " + direction);
 

@@ -30,6 +30,11 @@ public class Drone {
         return batteryLevel;
     }
 
+    //setter for current direction
+    public void setDirection(String dir) {
+        this.direction = dir;
+    }
+
 
     public Integer extras(JSONObject extraInfo){
         if(extraInfo.has("found")){
