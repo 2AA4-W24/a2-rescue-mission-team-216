@@ -4,46 +4,38 @@ import org.json.JSONObject;
 
 public class Compass {
 
-
-    private static final int N=0;
-    private static final int E=1;
-    private static final int S=2;
-    private static final int W=3;
-    JSONObject parameters = new JSONObject();
-
-    private String turnLeft(String direction){
-        switch(direction)
-        {
+    public static String turnLeft(String direction) {
+        switch (direction) {
             case "E":
                 return "N";
-                break;
             case "N":
                 return "W";
             case "S":
                 return "E";
             case "W":
                 return "N";
+            default:
+                throw new IllegalArgumentException("Invalid direction: " + direction);
 
+        }
+    }
 
-
-
-    private String turnRight(String direction){
-                switch(direction)
-                {
-                    case "E":
-                        return "S";
-                        break;
-                    case "N":
-                        return "E";
-                    case "S":
-                        return "W";
-                    case "W":
-                        return "N";
-
-            }
-
+    public static String turnRight(String direction) {
+        switch(direction) {
+            case "E":
+                return "S";
+            case "N":
+                return "E";
+            case "S":
+                return "W";
+            case "W":
+                return "N";
+            default:
+                throw new IllegalArgumentException("Invalid direction: " + direction);
+        }
 
     }
+
 
 }
 
@@ -53,4 +45,3 @@ public class Compass {
     // check direction facing
     // if facing north, hits wall, turn right
     // if facing north when hits wall, turn right, move
-}
