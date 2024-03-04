@@ -51,39 +51,6 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
 
-//        if (groundLocation){
-//            if(extraInfo found == "GROUND"){
-//                range = extraInfo range
-//
-//            }
-//            else{
-//                drone.compass turn left = newDirection;
-//                decision.put("parameters", parameters.put("direction", newDirection));
-//            }
-//
-//            //drone.findGround (a method within drone)
-//
-//            //if current dir returns ground via radar awesome store range to be used in next phase
-//            //boolean groundLocate to false
-//            //set boolean groundTravel to true
-//            //decision = do nothing I guess u just located the ground and how far it is
-//            //if not then decision = change current dir
-//            //return the decision
-//        }
-//
-//        else if (groundTravel) {
-//            if (range != 0){
-//                finalDecision = String.valueOf(decision.put("action", "fly"));
-//                range--;
-//            }
-//            else{
-//                groundTravel = false;
-//                criticalPoint = true;
-//            }
-//            return finalDecision;
-//        }
-//        if (criticalPoint) {
-
         switch (counter) {
             case 0:
                 String dirr = drone.getDirection();
@@ -104,7 +71,7 @@ public class Explorer implements IExplorerRaid {
                 }
                 break;
 
-            case 2:
+            case 2, 4:
                 String blah = drone.getDirection();
                 String dir = Compass.turnRight(blah);
                 decision.put("parameters", parameters.put("direction", dir));
@@ -121,14 +88,6 @@ public class Explorer implements IExplorerRaid {
                 else{
                     counter++;
                 }
-                break;
-
-            case 4:
-                String blah2 = drone.getDirection();
-                String dir2 = Compass.turnRight(blah2);
-                decision.put("parameters", parameters.put("direction", dir2));
-                decision.put("action", "heading");
-                counter++;
                 break;
 
             case 6:
