@@ -55,16 +55,20 @@ public class Explorer implements IExplorerRaid {
                 case 0, 5:
                     String dirr = drone.getDirection(); //current direction
                     if (a == 3) {
-                        decision.put("parameters", parameters.put("direction", Compass.right(dirr))); //setting the parameter as the right direction
-                        decision.put("action", "echo"); //echo to the right
+                        /*decision.put("parameters", parameters.put("direction", Compass.right(dirr))); //setting the parameter as the right direction
+                        decision.put("action", "echo"); //echo to the right*/
+                        decision = Radar.echoRight(dirr);
                         a--;
                     } else if (a == 2) {
-                        decision.put("parameters", parameters.put("direction", Compass.left(dirr))); //setting the parameter as the left direction
+                        /*decision.put("parameters", parameters.put("direction", Compass.left(dirr))); //setting the parameter as the left direction
                         decision.put("action", "echo"); //echo to the left
+                        */
+                        decision = Radar.echoLeft(dirr);
                         a--;
                     } else {
-                        decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
-                        decision.put("action", "echo"); //echo forward
+                        /*decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
+                        decision.put("action", "echo"); //echo forward*/
+                        decision = Radar.echoFwd(dirr);
                         a = 3; //reset this counter (a) for next use
                         counter++; //move to next phase
                     }
