@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class Compass {
 
-    public static String turnLeft(String direction) {
+    public static String left(String direction) {
         switch (direction) {
             case "E":
                 return "N";
@@ -20,7 +20,7 @@ public class Compass {
         }
     }
 
-    public static String turnRight(String direction) {
+    public static String right(String direction) {
         switch(direction) {
             case "E":
                 return "S";

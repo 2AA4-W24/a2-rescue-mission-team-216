@@ -55,11 +55,11 @@ public class Explorer implements IExplorerRaid {
                 case 0, 5:
                     String dirr = drone.getDirection(); //current direction
                     if (a == 3) {
-                        decision.put("parameters", parameters.put("direction", Compass.turnRight(dirr))); //setting the parameter as the right direction
+                        decision.put("parameters", parameters.put("direction", Compass.right(dirr))); //setting the parameter as the right direction
                         decision.put("action", "echo"); //echo to the right
                         a--;
                     } else if (a == 2) {
-                        decision.put("parameters", parameters.put("direction", Compass.turnLeft(dirr))); //setting the parameter as the left direction
+                        decision.put("parameters", parameters.put("direction", Compass.left(dirr))); //setting the parameter as the left direction
                         decision.put("action", "echo"); //echo to the left
                         a--;
                     } else {
@@ -91,14 +91,14 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 2:
-                    String blah = drone.getDirection(); //current dir
-                    String dir = Compass.turnRight(blah); //dir to right
+                    String dir = drone.getDirection(); //current dir
+                    /*dir = Compass.turnRight(blah); //dir to right
                     logger.info("blah {}", blah);
-                    logger.info("dir {}", dir);
+                    logger.info("dir {}", dir);*/
                     //head right
-                    decision.put("parameters", parameters.put("direction", dir));
+                    drone.turnRight();
+                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
-                    drone.setDirection(dir);
                     counter++; //next phase
                     break;
 
@@ -114,38 +114,38 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 4:
-                    String blah2 = drone.getDirection(); //current dir
-                    String dir2 = Compass.turnRight(blah2); //dir to right
+                    /*String dir2 = drone.getDirection(); //current dir
+                    dir2 = Compass.turnRight(blah2); //dir to right
                     logger.info("blah {}", blah2);
-                    logger.info("dir {}", dir2);
+                    logger.info("dir {}", dir2);*/
                     //head right to complete u-turn
-                    decision.put("parameters", parameters.put("direction", dir2));
+                    drone.turnRight();
+                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
-                    drone.setDirection(dir2);
                     counter++; //next phase
                     break;
 
                 case 7:
-                    String blah3 = drone.getDirection();//current dir
+                    /*String blah3 = drone.getDirection();//current dir
                     String dir3 = Compass.turnLeft(blah3);//left dir
                     logger.info("blah {}", blah3);
-                    logger.info("dir {}", dir3);
+                    logger.info("dir {}", dir3);*/
                     //
-                    decision.put("parameters", parameters.put("direction", dir3));
+                    drone.turnLeft();
+                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
-                    drone.setDirection(dir3);
                     counter++; //next phase
                     break;
 
                 case 9:
-                    String blah4 = drone.getDirection();//current dir
+                    /*String blah4 = drone.getDirection();//current dir
                     String dir4 = Compass.turnLeft(blah4);//left dir
                     logger.info("blah {}", blah4);
-                    logger.info("dir {}", dir4);
+                    logger.info("dir {}", dir4);*/
                     //head left to complete u-turn
-                    decision.put("parameters", parameters.put("direction", dir4));
+                    drone.turnLeft();
+                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
-                    drone.setDirection(dir4);
                     counter = 0; //next phase
                     break;
 

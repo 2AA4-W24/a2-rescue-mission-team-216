@@ -33,6 +33,14 @@ public class Drone {
     //setter for current direction
     public void setDirection(String dir) {
         this.direction = dir;
+    } //we can get rid of this now
+
+    public void turnRight() {
+        this.direction = Compass.right(direction);
+    }
+
+    public void turnLeft() {
+        this.direction = Compass.left(direction);
     }
 
 
