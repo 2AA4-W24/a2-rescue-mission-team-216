@@ -6,7 +6,7 @@ import org.json.JSONTokener;
 
 import java.io.StringReader;
 
-public class Drone {
+class Drone {
     private String direction;
     private Integer batteryLevel;
     private Radar radar; // Adding a Radar instance variable
@@ -31,6 +31,7 @@ public class Drone {
         return batteryLevel;
     }
 
+
     //turning left & right (heading)
 
     public JSONObject turnRight() {
@@ -47,32 +48,27 @@ public class Drone {
         return decision;
     }
 
+    public JSONObject fly(){ //
+        decision.put("action", "fly");
+        return decision;
+    }
+
     //echoing
     public JSONObject echoFwd() {
-        return radar.echoFwdR(direction);
+        JSONObject result = radar.echoFwdR(direction);
+        return result;
+
     }
 
     public JSONObject echoRight() {
-        return radar.echoRightR(direction);
+        JSONObject result = radar.echoRightR(direction);
+        return result;
     }
 
     public JSONObject echoLeft() {
-        return radar.echoLeftR(direction);
+        JSONObject result = radar.echoLeftR(direction);
+        return result;
     }
-
-    public Integer extras(JSONObject extraInfo){
-        if(extraInfo.has("found")){
-            Integer range = extraInfo.getInt("range");
-            String found = extraInfo.getString("found");
-            if(found == "GROUND"){
-                return range;
-
-            }
-        }
-        return -1;
-    }
-
-
 
 
 }
