@@ -5,31 +5,29 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class Radar {
-    public static JSONObject echoFwd(String dir){
+
+    public static JSONObject echoFwdR(String dir){
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
-        //how to do this in one line and not 2?
         decision.put("parameters", parameters.put("direction", dir)); //setting the parameter as the current direction
         decision.put("action", "echo"); //echoing in the current direction
         return decision;
     }
 
-    public static JSONObject echoRight(String dir){ //is the static an issue? must ask TA
+    public static JSONObject echoRightR(String dir){ //is the static an issue? must ask TA
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
-        //how to do this in one line and not 2?
-        decision.put("parameters", parameters.put("direction", Compass.right(dir))); //setting the parameter as the current direction
-        decision.put("action", "echo"); //echoing in the current direction
+        decision.put("parameters", parameters.put("direction", Compass.right(dir))); //setting the parameter as the right direction
+        decision.put("action", "echo"); //echoing in the right direction
         return decision;
     }
-    public static JSONObject echoLeft(String dir){
+    public static JSONObject echoLeftR(String dir){
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
-        //how to do this in one line and not 2?
-        decision.put("parameters", parameters.put("direction", Compass.left(dir))); //setting the parameter as the current direction
+        decision.put("parameters", parameters.put("direction", Compass.left(dir))); //setting the parameter as the left direction
         decision.put("action", "echo"); //echoing in the current direction
         return decision;
     }

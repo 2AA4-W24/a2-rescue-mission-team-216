@@ -19,10 +19,8 @@ public class Drone {
         this.radar = new Radar();
     }
 
-
-
     // Getters for direction and batteryLevel
-    public String getDirection() {
+    public String getDirection() { //we might not need this anymore
         return direction;
     }
 
@@ -30,10 +28,7 @@ public class Drone {
         return batteryLevel;
     }
 
-    //setter for current direction
-    public void setDirection(String dir) {
-        this.direction = dir;
-    } //we can get rid of this now
+    //turning left & right (heading)
 
     public void turnRight() {
         this.direction = Compass.right(direction);
@@ -41,8 +36,21 @@ public class Drone {
 
     public void turnLeft() {
         this.direction = Compass.left(direction);
+        //maybe eventually modify to return the JSONObject stuff like in echo
     }
 
+    //echoing
+    public JSONObject echoFwd() {
+        return radar.echoFwdR(direction);
+    }
+
+    public JSONObject echoRight() {
+        return radar.echoRightR(direction);
+    }
+
+    public JSONObject echoLeft() {
+        return radar.echoLeftR(direction);
+    }
 
     public Integer extras(JSONObject extraInfo){
         if(extraInfo.has("found")){

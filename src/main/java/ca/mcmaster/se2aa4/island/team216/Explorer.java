@@ -53,22 +53,14 @@ public class Explorer implements IExplorerRaid {
         if (groundLocation) {
             switch (counter) {
                 case 0, 5:
-                    String dirr = drone.getDirection(); //current direction
                     if (a == 3) {
-                        /*decision.put("parameters", parameters.put("direction", Compass.right(dirr))); //setting the parameter as the right direction
-                        decision.put("action", "echo"); //echo to the right*/
-                        decision = Radar.echoRight(dirr);
+                        decision = drone.echoRight();
                         a--;
                     } else if (a == 2) {
-                        /*decision.put("parameters", parameters.put("direction", Compass.left(dirr))); //setting the parameter as the left direction
-                        decision.put("action", "echo"); //echo to the left
-                        */
-                        decision = Radar.echoLeft(dirr);
+                        decision = drone.echoLeft();
                         a--;
                     } else {
-                        /*decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
-                        decision.put("action", "echo"); //echo forward*/
-                        decision = Radar.echoFwd(dirr);
+                        decision = drone.echoFwd();
                         a = 3; //reset this counter (a) for next use
                         counter++; //move to next phase
                     }
@@ -95,11 +87,6 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 2:
-                    String dir = drone.getDirection(); //current dir
-                    /*dir = Compass.turnRight(blah); //dir to right
-                    logger.info("blah {}", blah);
-                    logger.info("dir {}", dir);*/
-                    //head right
                     drone.turnRight();
                     decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
@@ -118,10 +105,6 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 4:
-                    /*String dir2 = drone.getDirection(); //current dir
-                    dir2 = Compass.turnRight(blah2); //dir to right
-                    logger.info("blah {}", blah2);
-                    logger.info("dir {}", dir2);*/
                     //head right to complete u-turn
                     drone.turnRight();
                     decision.put("parameters", parameters.put("direction", drone.getDirection()));
@@ -130,11 +113,6 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 7:
-                    /*String blah3 = drone.getDirection();//current dir
-                    String dir3 = Compass.turnLeft(blah3);//left dir
-                    logger.info("blah {}", blah3);
-                    logger.info("dir {}", dir3);*/
-                    //
                     drone.turnLeft();
                     decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
@@ -142,11 +120,6 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 9:
-                    /*String blah4 = drone.getDirection();//current dir
-                    String dir4 = Compass.turnLeft(blah4);//left dir
-                    logger.info("blah {}", blah4);
-                    logger.info("dir {}", dir4);*/
-                    //head left to complete u-turn
                     drone.turnLeft();
                     decision.put("parameters", parameters.put("direction", drone.getDirection()));
                     decision.put("action", "heading");
