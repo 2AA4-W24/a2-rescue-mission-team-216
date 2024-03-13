@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-public class Radar {
+class Radar {
     private JSONObject decision = new JSONObject();
     private JSONObject parameters = new JSONObject();
 

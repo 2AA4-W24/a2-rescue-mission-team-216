@@ -15,17 +15,23 @@ public class Explorer implements IExplorerRaid {
     private Integer range = 0;
     private Integer a = 3; //for echoing in 3 dirs or flying 3 steps
     private String found = "";
+    Boolean phase1;
     Boolean groundLocation = true;
     Boolean groundTravel = false;
-    Boolean criticalPoint = true;
-    Boolean siteLocate = false;
+    Boolean criticalPoint = false;
     Boolean goHome = false;
     JSONObject extraInfo;
     JSONObject parameters = new JSONObject();
     Integer counter = 0;
 
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
-    Drone drone;
+    private Drone drone; //move this into marine mission and only reference marine mission via mission
+
+//    private Mission mission;
+//
+//    public Explorer(Mission mission) {
+//        this.mission = mission;
+//    }
 
     @Override
 
@@ -49,6 +55,9 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         logger.info("Counter {}", counter);
+
+
+
 
         if (groundLocation) {
             switch (counter) {
@@ -145,6 +154,7 @@ public class Explorer implements IExplorerRaid {
         //returns nothing? interface specification won't allow return statements? I think?
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n" + response.toString(2));
+//        MarineMission.getResponse(response);
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
