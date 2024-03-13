@@ -20,7 +20,7 @@ public class Explorer implements IExplorerRaid {
     Boolean criticalPoint = true;
     Boolean siteLocate = false;
     Boolean goHome = false;
-    JSONObject extraInfo;
+    JSONObject extraInfo = new JSONObject();
     JSONObject parameters = new JSONObject();
     Integer counter = 0;
 
@@ -50,7 +50,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject decision = new JSONObject();
         logger.info("Counter {}", counter);
 
-        if (groundLocation) {
+        /*if (groundLocation) {
             switch (counter) {
                 case 0, 5:
                     if (a == 3) {
@@ -129,9 +129,73 @@ public class Explorer implements IExplorerRaid {
                         }
                     }
                     break;
+            }*/
+        if (groundLocation) {
+            switch (counter) {
+                case 0, 3: //rotate between echoing and flying
+                    if (a == 3) {
+                        decision = drone.echoLeft();
+                        a--;
+                    } else if (a == 2) {
+                        decision = drone.echoRight();
+                        a--;
+                    } else if (a == 1) {
+                        decision = drone.echoFwd();
+                        a--;
+                        break;
+                    } else {
+                        if (range > 1) {
+                            decision.put("action", "fly");
+                        } else {
+                            counter++; //go to next case if you fly to the edge
+                        }
+                        a = 3;
+                    }
+                    break;
+
+                case 1: //u-turn pt 1 (right)
+                    decision = drone.turnRight();
+                    counter++;
+                    break;
+
+                case 2: //u-turn pt 2 (right)
+                    decision = drone.turnRight();
+                    counter++;
+                    break;
+
+                case 4: //u-turn pt 1 (left)
+                    decision = drone.turnLeft();
+                    counter++;
+                    break;
+
+                case 5: //u-turn pt 1 (left)
+                    decision = drone.turnLeft();
+                    counter = 0;
+                    break;
             }
-        } else if (groundTravel) {
-            //will refactor moving to ground once it's found to be in this phase (???)
+        }
+
+        if (groundTravel) {
+            switch (counter) {
+                case 0:
+                    counter++;
+                    if (a == 2) {
+                        decision = drone.turnLeft(); //turn left if the last echo was to the left
+                        break;
+                    } else if (a == 1) {
+                        decision = drone.turnRight(); //turn right if the last echo was to the right
+                        break;
+                    }
+
+                case 1:
+                    if (range > 0) {
+                        decision.put("action","fly"); //fly to ground
+                        range--;
+                    } else {
+                        decision.put("action","stop"); //stop when ground reached
+                    }
+                    break;
+            }
         }
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -152,6 +216,16 @@ public class Explorer implements IExplorerRaid {
         logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+
+        if (extraInfo.has("found")) {
+            range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
+            found = extraInfo.getString("found");
+            if (found.equals("GROUND")) { //if ground found, switch to next phase and reset counter for reuse
+                groundLocation = false;
+                groundTravel = true;
+                counter = 0;
+            }
+        }
     }
 
     @Override
