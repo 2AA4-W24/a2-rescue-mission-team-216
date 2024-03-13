@@ -10,13 +10,16 @@ public class Drone {
     private String direction;
     private Integer batteryLevel;
     private Radar radar; // Adding a Radar instance variable
+    private JSONObject decision;
+    private JSONObject parameters;
 
-
-    public Drone(String initializationInfo) {
+    public Drone(String initializationInfo) { //class constructor
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(initializationInfo)));
         this.direction = info.getString("heading");
         this.batteryLevel = info.getInt("budget");
         this.radar = new Radar();
+        this.decision = new JSONObject();
+        this.parameters = new JSONObject();
     }
 
     // Getters for direction and batteryLevel
@@ -32,8 +35,6 @@ public class Drone {
 
     public JSONObject turnRight() {
         this.direction = Compass.right(direction);
-        JSONObject decision = new JSONObject();
-        JSONObject parameters = new JSONObject();
         decision.put("parameters", parameters.put("direction", direction));
         decision.put("action", "heading");
         return decision;
@@ -41,8 +42,6 @@ public class Drone {
 
     public JSONObject turnLeft() {
         this.direction = Compass.left(direction);
-        JSONObject decision = new JSONObject();
-        JSONObject parameters = new JSONObject();
         decision.put("parameters", parameters.put("direction", direction));
         decision.put("action", "heading");
         return decision;
