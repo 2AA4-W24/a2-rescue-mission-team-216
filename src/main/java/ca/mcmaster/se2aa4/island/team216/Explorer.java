@@ -12,20 +12,22 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
+    private boolean i = true;
     private Integer range = 0;
-    private Integer a = 3; //for echoing in 3 dirs or flying 3 steps
     private String found = "";
-    Boolean groundLocation = true;
+    Boolean groundLocation = false;
     Boolean groundTravel = false;
     Boolean criticalPoint = true;
     Boolean siteLocate = false;
     Boolean goHome = false;
-    JSONObject extraInfo = new JSONObject();
+    JSONObject extraInfo;
     JSONObject parameters = new JSONObject();
     Integer counter = 0;
 
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
     Drone drone;
+
+
 
     @Override
 
@@ -48,154 +50,62 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
-        logger.info("Counter {}", counter);
 
-        /*if (groundLocation) {
-            switch (counter) {
-                case 0, 5:
-                    if (a == 3) {
-                        decision = drone.echoRight();
-                        a--;
-                    } else if (a == 2) {
-                        decision = drone.echoLeft();
-                        a--;
-                    } else {
-                        decision = drone.echoFwd();
-                        a = 3; //reset this counter (a) for next use
-                        counter++; //move to next phase
-                    }
-                    break;
+        switch (counter) {
+            case 0:
+                String dirr = drone.getDirection();
+                decision.put("parameters", parameters.put("direction", dirr)); //setting the parameter as the current direction
+                decision = (decision.put("action", "echo")); //echo if you haven't done anything yet
+                counter++;
+                break;
 
-                case 1, 6:
-                    if (extraInfo.has("found")) { //have to eventually change to account for ground
-                        range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
-                        found = extraInfo.getString("found");
-                        if (found.equals("GROUND")) { //if ground found, fly forward and then move to 10
-                            decision.put("action", "fly");
-                            counter = 10;
-                        }
-                    } //only happens at the very beginning to know how far you can go down the map/check for ground
-
-                    if (range >= 3) { //while you are not 3 squares from the edge of the map
-                        logger.info("Range: {}", range);
-                        decision.put("action", "fly"); //fly towards the edge of the map
-                        range--;
-                        if (range == 3) {
-                            counter++; // once you've reached 3 squares from edge, increment counter so you enter the next phase on the next loop
-                        }
-                    }
-                    break;
-
-                case 2:
-                    decision = drone.turnRight();
-                    counter++; //next phase
-                    break;
-
-                case 3, 8:
-                    if (a >= 0) { //fly 3 steps down
-                        decision.put("action", "fly");
-                        a--;
-                        if (a == 0) {
-                            counter++;
-                            a = 3; //when 3 steps away, increment counter for next phase & reset a
-                        }
-                    }
-                    break;
-
-                case 4:
-                    //head right to complete u-turn
-                    decision = drone.turnRight();
-                    counter++; //next phase
-                    break;
-
-                case 7:
-                    decision = drone.turnLeft();
-                    counter++; //next phase
-                    break;
-
-                case 9:
-                    decision = drone.turnLeft();
-                    counter = 0; //next phase
-                    break;
-
-                case 10:
-                    if (range >= 2) { //fly to ground
-                        decision.put("action", "fly");
-                        range--;
-                        if (range == 2) { //when ground reached, stop & set vars accordingly for next phase
-                            decision.put("action", "stop");
-                            groundLocation = false;
-                            groundTravel = true; //technically this phase is case 10, will change later or combine phases
-                        }
-                    }
-                    break;
-            }*/
-        if (groundLocation) {
-            switch (counter) {
-                case 0, 3: //rotate between echoing and flying
-                    if (a == 3) {
-                        decision = drone.echoLeft();
-                        a--;
-                    } else if (a == 2) {
-                        decision = drone.echoRight();
-                        a--;
-                    } else if (a == 1) {
-                        decision = drone.echoFwd();
-                        a--;
-                        break;
-                    } else {
-                        if (range > 1) {
-                            decision.put("action", "fly");
-                        } else {
-                            counter++; //go to next case if you fly to the edge
-                        }
-                        a = 3;
-                    }
-                    break;
-
-                case 1: //u-turn pt 1 (right)
-                    decision = drone.turnRight();
+            case 1, 5:
+                if (extraInfo.has("found")) {
+                    range = extraInfo.getInt("range");
+                }
+                if (range > 0) { //while you are not at the edge of the map
+                    decision.put("action", "fly"); //fly towards the edge of the map
+                    range--;
+                } else {
                     counter++;
-                    break;
+                }
+                break;
 
-                case 2: //u-turn pt 2 (right)
-                    decision = drone.turnRight();
+            case 2, 4:
+                String blah = drone.getDirection();
+                String dir = Compass.turnRight(blah);
+                decision.put("parameters", parameters.put("direction", dir));
+                decision.put("action", "heading");
+                counter++;
+                break;
+
+            case 3,7:
+                Integer c = 2;
+                if (c>0) {
+                    decision.put("action", "fly");
+                    c--;
+                }
+                else{
                     counter++;
-                    break;
+                }
+                break;
 
-                case 4: //u-turn pt 1 (left)
-                    decision = drone.turnLeft();
-                    counter++;
-                    break;
+            case 6:
+                String blah3 = drone.getDirection();
+                String dir3 = Compass.turnLeft(blah3);
+                decision.put("parameters", parameters.put("direction", dir3));
+                decision.put("action", "heading");
+                counter++;
+                break;
 
-                case 5: //u-turn pt 1 (left)
-                    decision = drone.turnLeft();
-                    counter = 0;
-                    break;
-            }
-        }
 
-        if (groundTravel) {
-            switch (counter) {
-                case 0:
-                    counter++;
-                    if (a == 2) {
-                        decision = drone.turnLeft(); //turn left if the last echo was to the left
-                        break;
-                    } else if (a == 1) {
-                        decision = drone.turnRight(); //turn right if the last echo was to the right
-                        break;
-                    }
-
-                case 1:
-                    if (range > 0) {
-                        decision.put("action","fly"); //fly to ground
-                        range--;
-                    } else {
-                        decision.put("action","stop"); //stop when ground reached
-                    }
-                    break;
-            }
+            case 8:
+                String blah4 = drone.getDirection();
+                String dir4 = Compass.turnLeft(blah4);
+                decision.put("parameters", parameters.put("direction", dir4));
+                decision.put("action", "heading");
+                counter=0;
+                break;
         }
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -213,19 +123,9 @@ public class Explorer implements IExplorerRaid {
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
-        logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
 
-        if (extraInfo.has("found")) {
-            range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
-            found = extraInfo.getString("found");
-            if (found.equals("GROUND")) { //if ground found, switch to next phase and reset counter for reuse
-                groundLocation = false;
-                groundTravel = true;
-                counter = 0;
-            }
-        }
     }
 
     @Override
