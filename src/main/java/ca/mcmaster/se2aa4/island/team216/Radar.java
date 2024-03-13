@@ -14,7 +14,7 @@ public class Radar {
         return decision;
     }
 
-    public JSONObject echoRightR(String dir){ //is the static an issue? must ask TA
+    public JSONObject echoRightR(String dir){
         decision.put("parameters", parameters.put("direction", Compass.right(dir))); //setting the parameter as the right direction
         decision.put("action", "echo"); //echoing in the right direction
         return decision;
