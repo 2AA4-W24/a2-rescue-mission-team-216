@@ -30,13 +30,22 @@ public class Drone {
 
     //turning left & right (heading)
 
-    public void turnRight() {
+    public JSONObject turnRight() {
         this.direction = Compass.right(direction);
+        JSONObject decision = new JSONObject();
+        JSONObject parameters = new JSONObject();
+        decision.put("parameters", parameters.put("direction", direction));
+        decision.put("action", "heading");
+        return decision;
     }
 
-    public void turnLeft() {
+    public JSONObject turnLeft() {
         this.direction = Compass.left(direction);
-        //maybe eventually modify to return the JSONObject stuff like in echo
+        JSONObject decision = new JSONObject();
+        JSONObject parameters = new JSONObject();
+        decision.put("parameters", parameters.put("direction", direction));
+        decision.put("action", "heading");
+        return decision;
     }
 
     //echoing

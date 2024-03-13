@@ -87,9 +87,7 @@ public class Explorer implements IExplorerRaid {
                     break;
 
                 case 2:
-                    drone.turnRight();
-                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
-                    decision.put("action", "heading");
+                    decision = drone.turnRight();
                     counter++; //next phase
                     break;
 
@@ -106,23 +104,17 @@ public class Explorer implements IExplorerRaid {
 
                 case 4:
                     //head right to complete u-turn
-                    drone.turnRight();
-                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
-                    decision.put("action", "heading");
+                    decision = drone.turnRight();
                     counter++; //next phase
                     break;
 
                 case 7:
-                    drone.turnLeft();
-                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
-                    decision.put("action", "heading");
+                    decision = drone.turnLeft();
                     counter++; //next phase
                     break;
 
                 case 9:
-                    drone.turnLeft();
-                    decision.put("parameters", parameters.put("direction", drone.getDirection()));
-                    decision.put("action", "heading");
+                    decision = drone.turnLeft();
                     counter = 0; //next phase
                     break;
 
