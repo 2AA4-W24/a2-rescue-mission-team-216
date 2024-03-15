@@ -6,12 +6,16 @@ class MarineMission implements Mission {
     private JSONObject response;
     private Drone drone;
     private Integer range;
-
+    public Integer counter=0;
+    public Integer a=3;
+    JSONObject extraInfo;
     JSONObject decision; //do we need to create a new JSONObject?
 
 
 
     private void takeDecision(Drone drone){
+
+
 
         //phase 1 = find ground
         //phase 2 = move to ground
@@ -22,7 +26,7 @@ class MarineMission implements Mission {
     }
 
     public void getResponse(JSONObject missionResponse) {
-        response = missionResponse;
+        this.response = missionResponse;
     }
 
 
@@ -66,21 +70,35 @@ class MarineMission implements Mission {
                             range = response.getInt("range") - 1;
                             decision.put("action", "fly");
                         } else if (rangeDir.equals("R")) {
+                            range = response.getInt("range") - 1;
                             drone.turnRight();
                         } else if (rangeDir.equals("L")) {
+                            range = response.getInt("range") - 1;
                             drone.turnLeft();
-
                         }
+                        //set to phase 2 somehow?
 
                         System.out.println("Ground has been located in the" + drone.getDirection() + "direction");
-                        break; // Exit the switch statement
+
                     }
 
                     else{
                         c++;
                     }
+                    break; // Exit the switch statement
                 }
             case 3: // Third phase
+//                if(rangeDir.equals("F") || rangeDir.equals("R")){
+//                    decision = drone.echoLeft();
+//                    rangeDir= "L";
+//                } else if (rangeDir.equals("L") ) {
+//                    decision = drone.echoRight();
+//                    rangeDir = "R";
+//                }
+//                else{
+//                    decision.put("action", "fly");
+//                }
+                c--;
                 // Continue similar logic for other directions (left and right)
                 // Here, you would echo left or right based on the previous action
                 break;
@@ -94,7 +112,7 @@ class MarineMission implements Mission {
 
 
     @Override
-    public JSONObject phase2() {
+    public JSONObject phase2() { // going to ground
 
         if (range != 0){
             decision.put("action", "fly");
