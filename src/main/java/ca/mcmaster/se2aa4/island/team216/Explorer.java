@@ -21,8 +21,9 @@ public class Explorer implements IExplorerRaid {
     Boolean criticalPoint = false;
     Boolean goHome = false;
     JSONObject extraInfo;
-    JSONObject parameters = new JSONObject();
     Integer counter = 0;
+
+    private MarineMission MM = new MarineMission();
 
     private final Radar radar = new Radar(); //instance of radar takes care of watching the drone boundary
     private Drone drone; //move this into marine mission and only reference marine mission via mission
@@ -59,89 +60,89 @@ public class Explorer implements IExplorerRaid {
 
 
 
-        if (groundLocation) {
-            switch (counter) {
-                case 0, 5:
-                    if (a == 3) {
-                        decision = drone.echoRight();
-                        a--;
-                    } else if (a == 2) {
-                        decision = drone.echoLeft();
-                        a--;
-                    } else {
-                        decision = drone.echoFwd();
-                        a = 3; //reset this counter (a) for next use
-                        counter++; //move to next phase
-                    }
-                    break;
-
-                case 1, 6:
-                    if (extraInfo.has("found")) { //have to eventually change to account for ground
-                        range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
-                        found = extraInfo.getString("found");
-                        if (found.equals("GROUND")) { //if ground found, fly forward and then move to 10
-                            decision.put("action", "fly");
-                            counter = 10;
-                        }
-                    } //only happens at the very beginning to know how far you can go down the map/check for ground
-
-                    if (range >= 3) { //while you are not 3 squares from the edge of the map
-                        logger.info("Range: {}", range);
-                        decision.put("action", "fly"); //fly towards the edge of the map
-                        range--;
-                        if (range == 3) {
-                            counter++; // once you've reached 3 squares from edge, increment counter so you enter the next phase on the next loop
-                        }
-                    }
-                    break;
-
-                case 2:
-                    decision = drone.turnRight();
-                    counter++; //next phase
-                    break;
-
-                case 3, 8:
-                    if (a >= 0) { //fly 3 steps down
-                        decision.put("action", "fly");
-                        a--;
-                        if (a == 0) {
-                            counter++;
-                            a = 3; //when 3 steps away, increment counter for next phase & reset a
-                        }
-                    }
-                    break;
-
-                case 4:
-                    //head right to complete u-turn
-                    decision = drone.turnRight();
-                    counter++; //next phase
-                    break;
-
-                case 7:
-                    decision = drone.turnLeft();
-                    counter++; //next phase
-                    break;
-
-                case 9:
-                    decision = drone.turnLeft();
-                    counter = 0; //next phase
-                    break;
-
-                case 10:
-                    if (range >= 2) { //fly to ground
-                        decision.put("action", "fly");
-                        range--;
-                        if (range == 2) { //when ground reached, stop & set vars accordingly for next phase
-                            decision.put("action", "stop");
-                            groundLocation = false;
-                            groundTravel = true; //technically this phase is case 10, will change later or combine phases
-                        }
-                    }
-                    break;
-            }
-        } else if (groundTravel) {
-            //will refactor moving to ground once it's found to be in this phase (???)
-        }
+//        if (groundLocation) {
+//            switch (counter) {
+//                case 0, 5:
+//                    if (a == 3) {
+//                        decision = drone.echoRight();
+//                        a--;
+//                    } else if (a == 2) {
+//                        decision = drone.echoLeft();
+//                        a--;
+//                    } else {
+//                        decision = drone.echoFwd();
+//                        a = 3; //reset this counter (a) for next use
+//                        counter++; //move to next phase
+//                    }
+//                    break;
+//
+//                case 1, 6:
+//                    if (extraInfo.has("found")) { //have to eventually change to account for ground
+//                        range = extraInfo.getInt("range"); //extracting range and found vars if they exist (aka if the last action was echo)
+//                        found = extraInfo.getString("found");
+//                        if (found.equals("GROUND")) { //if ground found, fly forward and then move to 10
+//                            decision.put("action", "fly");
+//                            counter = 10;
+//                        }
+//                    } //only happens at the very beginning to know how far you can go down the map/check for ground
+//
+//                    if (range >= 3) { //while you are not 3 squares from the edge of the map
+//                        logger.info("Range: {}", range);
+//                        decision.put("action", "fly"); //fly towards the edge of the map
+//                        range--;
+//                        if (range == 3) {
+//                            counter++; // once you've reached 3 squares from edge, increment counter so you enter the next phase on the next loop
+//                        }
+//                    }
+//                    break;
+//
+//                case 2:
+//                    decision = drone.turnRight();
+//                    counter++; //next phase
+//                    break;
+//
+//                case 3, 8:
+//                    if (a >= 0) { //fly 3 steps down
+//                        decision.put("action", "fly");
+//                        a--;
+//                        if (a == 0) {
+//                            counter++;
+//                            a = 3; //when 3 steps away, increment counter for next phase & reset a
+//                        }
+//                    }
+//                    break;
+//
+//                case 4:
+//                    //head right to complete u-turn
+//                    decision = drone.turnRight();
+//                    counter++; //next phase
+//                    break;
+//
+//                case 7:
+//                    decision = drone.turnLeft();
+//                    counter++; //next phase
+//                    break;
+//
+//                case 9:
+//                    decision = drone.turnLeft();
+//                    counter = 0; //next phase
+//                    break;
+//
+//                case 10:
+//                    if (range >= 2) { //fly to ground
+//                        decision.put("action", "fly");
+//                        range--;
+//                        if (range == 2) { //when ground reached, stop & set vars accordingly for next phase
+//                            decision.put("action", "stop");
+//                            groundLocation = false;
+//                            groundTravel = true; //technically this phase is case 10, will change later or combine phases
+//                        }
+//                    }
+//                    break;
+////            }
+//        } else if (groundTravel) {
+//            //will refactor moving to ground once it's found to be in this phase (???)
+//        }
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }
@@ -154,7 +155,7 @@ public class Explorer implements IExplorerRaid {
         //returns nothing? interface specification won't allow return statements? I think?
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n" + response.toString(2));
-//        MarineMission.getResponse(response);
+        MM.getResponse(response);
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
