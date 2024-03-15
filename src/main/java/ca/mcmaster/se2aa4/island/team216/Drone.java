@@ -53,6 +53,11 @@ class Drone {
         return decision;
     }
 
+    public JSONObject stop(){ //
+        decision.put("action", "stop");
+        return decision;
+    }
+
     //echoing
     public JSONObject echoFwd() {
         JSONObject result = radar.echoFwdR(direction);
