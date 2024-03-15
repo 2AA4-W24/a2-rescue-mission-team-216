@@ -55,10 +55,6 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
-        logger.info("Counter {}", counter);
-
-
-
 
 //        if (groundLocation) {
 //            switch (counter) {
@@ -143,6 +139,8 @@ public class Explorer implements IExplorerRaid {
 //        } else if (groundTravel) {
 //            //will refactor moving to ground once it's found to be in this phase (???)
 //        }
+
+        decision = MM.phase1(drone);
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }
@@ -155,7 +153,7 @@ public class Explorer implements IExplorerRaid {
         //returns nothing? interface specification won't allow return statements? I think?
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n" + response.toString(2));
-        MM.getResponse(response);
+        MM.checkResponse(response);
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");

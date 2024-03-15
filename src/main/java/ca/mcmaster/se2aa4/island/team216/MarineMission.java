@@ -2,15 +2,23 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-class MarineMission implements Mission {
+class MarineMission /*implements Mission*/ {
     private JSONObject response;
     private Drone drone;
     private Integer range;
-    public Integer counter=0;
-    public Integer a=3;
+    private String rangeDir;
+    //public Integer counter=0;
+    //public Integer a=3;
+    boolean searchGround = true;
+    boolean turnGround = false;
+    boolean faceGround = false;
+    boolean echoF = true;
+    boolean echoL = false;
+    boolean echoR = false;
+    boolean fly = false;
+
     JSONObject extraInfo;
     JSONObject decision; //do we need to create a new JSONObject?
-
 
 
     private void takeDecision(Drone drone){
@@ -25,13 +33,21 @@ class MarineMission implements Mission {
 
     }
 
-    public void getResponse(JSONObject missionResponse) {
+    public void checkResponse(JSONObject missionResponse) {
         this.response = missionResponse;
+        extraInfo = response.getJSONObject("extras");
+
+        if (extraInfo.has("found")) {
+            range = extraInfo.getInt("range");
+            String found = extraInfo.getString("found");
+            if (found.equals("GROUND")) {
+                searchGround = false;
+                if (rangeDir.equals("F")) {
+                    faceGround = true;
+                }
+            }
+        }
     }
-
-
-
-
 
     //return echo fwd one time
     //set rangeDir variable to equal fwd
@@ -46,16 +62,45 @@ class MarineMission implements Mission {
     //if it doesnt it moves forward one pace using action fly and then repeats the process of echoing left and right (NOT FWD)
     //and checking if ground is found
 
-
-
-    @Override
-    public JSONObject phase1() {
+    public JSONObject phase1(Drone drone) { //temp drone parameter
         // Counter to keep track of the phase
         int c = 1;
-        String rangeDir = null;
 
-        // Check the current phase
-        switch (c) {
+        if (searchGround) {
+
+            if (fly) {
+                decision = drone.fly();
+                fly = false;
+                echoL = true;
+            } else if (echoR) {
+                decision = drone.echoRight();
+                rangeDir = "R";
+                echoR = false;
+                fly = true;
+            } else if (echoL) {
+                decision = drone.echoLeft();
+                rangeDir = "L";
+                echoL = false;
+                echoR = true;
+            } else {
+                decision = drone.echoFwd();
+                rangeDir = "F";
+                echoL = true;
+            }
+        }
+        else if (!faceGround) {
+            if (rangeDir.equals("L")) {
+                decision = drone.turnLeft();
+            } else {
+                decision = drone.turnRight();
+            }
+            faceGround = true;
+        } else {
+            decision = drone.stop(); //go to phase 2
+        }
+
+            // Check the current phase
+        /*switch (c) {
             case 1:
                 decision = drone.echoFwd();
                 rangeDir = "F";
@@ -105,13 +150,11 @@ class MarineMission implements Mission {
             // Add more cases for subsequent phases as needed
             default:
                 break;
-        }
-        // Return the decision
+        }*/
+            // Return the decision
         return decision;
     }
 
-
-    @Override
     public JSONObject phase2() { // going to ground
 
         if (range != 0){
@@ -123,18 +166,15 @@ class MarineMission implements Mission {
         return decision;
     }
 
-    @Override
     public JSONObject phase3() {
 
         return null;
     }
 
-    @Override
     public JSONObject phase4() {
         return null;
     }
 
-    @Override
     public JSONObject phase5() {
 
         return null;
