@@ -88,16 +88,16 @@ class MarineMission implements Mission {
                     break; // Exit the switch statement
                 }
             case 3: // Third phase
-                if(rangeDir.equals("F") || rangeDir.equals("R")){
-                    decision = drone.echoLeft();
-                    rangeDir= "L";
-                } else if (rangeDir.equals("L") ) {
-                    decision = drone.echoRight();
-                    rangeDir = "R";
-                }
-                else{
-                    decision.put("action", "fly");
-                }
+//                if(rangeDir.equals("F") || rangeDir.equals("R")){
+//                    decision = drone.echoLeft();
+//                    rangeDir= "L";
+//                } else if (rangeDir.equals("L") ) {
+//                    decision = drone.echoRight();
+//                    rangeDir = "R";
+//                }
+//                else{
+//                    decision.put("action", "fly");
+//                }
                 c--;
                 // Continue similar logic for other directions (left and right)
                 // Here, you would echo left or right based on the previous action
