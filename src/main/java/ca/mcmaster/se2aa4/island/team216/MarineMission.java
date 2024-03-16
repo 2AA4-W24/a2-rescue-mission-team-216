@@ -1,3 +1,4 @@
+
 package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
@@ -100,60 +101,6 @@ class MarineMission /*implements Mission*/ {
             }
             faceGround = true;
         }
-
-            // Check the current phase
-        /*switch (c) {
-            case 1:
-                decision = drone.echoFwd();
-                rangeDir = "F";
-                c++;
-                break;
-            case 2:
-                if (response.has("found")) {
-                    String found = response.getString("found");
-                    if (found.equals("GROUND")) {
-
-                        if (rangeDir.equals("F")){
-                            range = response.getInt("range") - 1;
-                            decision.put("action", "fly");
-                        } else if (rangeDir.equals("R")) {
-                            range = response.getInt("range") - 1;
-                            drone.turnRight();
-                        } else if (rangeDir.equals("L")) {
-                            range = response.getInt("range") - 1;
-                            drone.turnLeft();
-                        }
-                        //set to phase 2 somehow?
-
-                        System.out.println("Ground has been located in the" + drone.getDirection() + "direction");
-
-                    }
-
-                    else{
-                        c++;
-                    }
-                    break; // Exit the switch statement
-                }
-            case 3: // Third phase
-//                if(rangeDir.equals("F") || rangeDir.equals("R")){
-//                    decision = drone.echoLeft();
-//                    rangeDir= "L";
-//                } else if (rangeDir.equals("L") ) {
-//                    decision = drone.echoRight();
-//                    rangeDir = "R";
-//                }
-//                else{
-//                    decision.put("action", "fly");
-//                }
-                c--;
-                // Continue similar logic for other directions (left and right)
-                // Here, you would echo left or right based on the previous action
-                break;
-            // Add more cases for subsequent phases as needed
-            default:
-                break;
-        }*/
-            // Return the decision
     }
 
     private void phase2(Drone drone) { // going to ground
