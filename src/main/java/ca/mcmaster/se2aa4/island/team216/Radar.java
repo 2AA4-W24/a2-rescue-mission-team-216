@@ -1,3 +1,4 @@
+
 package ca.mcmaster.se2aa4.island.team216;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,35 +28,6 @@ class Radar {
 
 }
 
-
-
-
-
-//OLD CODE FOR RADAR/TAKE DECISION WHICH WAS REMOVED
-
-
-//    private void 5stepsFwd(int j, int k, JSONObject decision){
-//
-//        JSONObject parameters = new JSONObject();
-//
-//        if (j > 0) {
-//            decision.put("action", "fly"); //if within range, make the drone fly
-//        } else if (j == 0) {
-//            decision.put("parameters", parameters.put("direction", "S")); //change the direction
-//            decision.put("action", "heading");
-//        } else if (j == -1) {
-//            decision.put("parameters", parameters.put("direction", "W")); //change the direction
-//            decision.put("action", "heading");
-//        } else {
-//            if (k > 0) {
-//                decision.put("action", "fly");
-//                k--;
-//            } else decision.put("action", "stop");
-//        }
-//
-//        logger.info("** Decision: {}", decision.toString());
-//        Decision = decision.toString();
-//    }
 //
 //    private void detect2(JSONObject decision) {
 //        JSONObject parameters = new JSONObject();
