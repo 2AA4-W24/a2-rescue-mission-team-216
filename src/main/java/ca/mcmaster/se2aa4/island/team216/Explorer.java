@@ -140,7 +140,7 @@ public class Explorer implements IExplorerRaid {
 //            //will refactor moving to ground once it's found to be in this phase (???)
 //        }
 
-        decision = MM.phase1(drone);
+        decision = MM.takeDecision(drone);
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }
