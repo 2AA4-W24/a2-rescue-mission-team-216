@@ -8,6 +8,9 @@ import java.io.StringReader;
 
 class Drone {
     private String direction;
+    private String init_direction;
+    private int x = 0;
+    private int y = 0;
     private Integer batteryLevel;
     private Radar radar; // Adding a Radar instance variable
     private JSONObject decision;
@@ -15,6 +18,7 @@ class Drone {
 
     public Drone(String initializationInfo) { //class constructor
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(initializationInfo)));
+        this.init_direction = info.getString("heading");
         this.direction = info.getString("heading");
         this.batteryLevel = info.getInt("budget");
         this.radar = new Radar();
@@ -50,6 +54,12 @@ class Drone {
 
     public JSONObject fly(){ //
         decision.put("action", "fly");
+
+        //if direction = init direction x +=1
+        //if direction = left of init y-=1
+        //if direction = right of init y += 1
+        //else x -= 1
+
         return decision;
     }
 
