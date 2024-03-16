@@ -54,19 +54,6 @@ class MarineMission /*implements Mission*/ {
         }
     }
 
-    //return echo fwd one time
-    //set rangeDir variable to equal fwd
-    //decision goes to AR, then take decision reenters phase1 and checks if the found == GROUND
-    //if it does then it extracts the range and set the heading to be the direction where the range was extracted
-    //if it doesnt then it goes on to echo left
-    //decision goes to AR, then take decision reenters phase1 and checks if the found == GROUND
-    //if it does then it extracts the range and set the heading to be the direction where the range was extracted
-    //if it doesnt then it goes on to echo right
-    //decision goes to AR, then take decision reenters phase1 and checks if the found == GROUND
-    //if it does then it extracts the range and set the heading to be the direction where the range was extracted
-    //if it doesnt it moves forward one pace using action fly and then repeats the process of echoing left and right (NOT FWD)
-    //and checking if ground is found
-
     private void phase1(Drone drone) { //temp drone parameter
         // Counter to keep track of the phase
         int c = 1;
