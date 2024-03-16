@@ -8,18 +8,18 @@ class Radar {
     private JSONObject decision = new JSONObject();
     private JSONObject parameters = new JSONObject();
 
-    public JSONObject echoFwdR(String dir){
+    public JSONObject echoFwd(String dir){
         decision.put("parameters", parameters.put("direction", dir)); //setting the parameter as the current direction
         decision.put("action", "echo"); //echoing in the current direction
         return decision;
     }
 
-    public JSONObject echoRightR(String dir){
+    public JSONObject echoRight(String dir){
         decision.put("parameters", parameters.put("direction", Compass.right(dir))); //setting the parameter as the right direction
         decision.put("action", "echo"); //echoing in the right direction
         return decision;
     }
-    public JSONObject echoLeftR(String dir){
+    public JSONObject echoLeft(String dir){
         decision.put("parameters", parameters.put("direction", Compass.left(dir))); //setting the parameter as the left direction
         decision.put("action", "echo"); //echoing in the current direction
         return decision;

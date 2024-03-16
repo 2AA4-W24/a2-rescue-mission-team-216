@@ -12,25 +12,29 @@ class MarineMission /*implements Mission*/ {
     boolean searchGround = true;
     boolean turnGround = false;
     boolean faceGround = false;
+    boolean atGround = false;
     boolean echoF = true;
     boolean echoL = false;
     boolean echoR = false;
     boolean fly = false;
 
     JSONObject extraInfo;
-    JSONObject decision; //do we need to create a new JSONObject?
+    public JSONObject decision; //do we need to create a new JSONObject?
 
-
-    private void takeDecision(Drone drone){
-
-
+    public JSONObject takeDecision(Drone drone){
 
         //phase 1 = find ground
+        if (!faceGround) {
+            phase1(drone);
+        }
+        else {
+            phase2(drone);
+        }
         //phase 2 = move to ground
         //phase 3 = perimeter of island
         //phase 4 = grid search for critical points
         //phase 5 = go home
-
+        return decision;
     }
 
     public void checkResponse(JSONObject missionResponse) {
@@ -62,7 +66,7 @@ class MarineMission /*implements Mission*/ {
     //if it doesnt it moves forward one pace using action fly and then repeats the process of echoing left and right (NOT FWD)
     //and checking if ground is found
 
-    public JSONObject phase1(Drone drone) { //temp drone parameter
+    private void phase1(Drone drone) { //temp drone parameter
         // Counter to keep track of the phase
         int c = 1;
 
@@ -95,8 +99,6 @@ class MarineMission /*implements Mission*/ {
                 decision = drone.turnRight();
             }
             faceGround = true;
-        } else {
-            decision = drone.stop(); //go to phase 2
         }
 
             // Check the current phase
@@ -152,18 +154,20 @@ class MarineMission /*implements Mission*/ {
                 break;
         }*/
             // Return the decision
-        return decision;
     }
 
-    public JSONObject phase2() { // going to ground
+    private void phase2(Drone drone) { // going to ground
 
-        if (range != 0){
-            decision.put("action", "fly");
+        if (range > 0){
+            decision = drone.fly();
+            range--;
         }
-        else{
+        else if (!atGround) {
             decision = drone.echoFwd(); //you have reached the island, check how far until you reach the edge of the island
+            atGround = true;
+        } else {
+            decision = drone.stop();
         }
-        return decision;
     }
 
     public JSONObject phase3() {

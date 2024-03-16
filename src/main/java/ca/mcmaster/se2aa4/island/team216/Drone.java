@@ -60,18 +60,18 @@ class Drone {
 
     //echoing
     public JSONObject echoFwd() {
-        JSONObject result = radar.echoFwdR(direction);
+        JSONObject result = radar.echoFwd(direction);
         return result;
 
     }
 
     public JSONObject echoRight() {
-        JSONObject result = radar.echoRightR(direction);
+        JSONObject result = radar.echoRight(direction);
         return result;
     }
 
     public JSONObject echoLeft() {
-        JSONObject result = radar.echoLeftR(direction);
+        JSONObject result = radar.echoLeft(direction);
         return result;
     }
 
