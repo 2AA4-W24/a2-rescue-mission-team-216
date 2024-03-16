@@ -104,7 +104,7 @@ class MarineMission /*implements Mission*/ {
         }
     }
 
-    public JSONObject phase3() {
+    private void phase3() {
 
         return null;
     }
