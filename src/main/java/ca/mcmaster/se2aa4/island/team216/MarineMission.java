@@ -28,7 +28,7 @@ class MarineMission /*implements Mission*/ {
         if (!faceGround) {
             phase1(drone);
         }
-        else {
+        else if (){
             phase2(drone);
         }
         //phase 2 = move to ground
@@ -77,6 +77,7 @@ class MarineMission /*implements Mission*/ {
             } else {
                 decision = drone.echoFwd();
                 rangeDir = "F";
+                echoF = false;
                 echoL = true;
             }
         }
@@ -100,13 +101,11 @@ class MarineMission /*implements Mission*/ {
             decision = drone.echoFwd(); //you have reached the island, check how far until you reach the edge of the island
             atGround = true;
         } else {
-            decision = drone.stop();
+            decision = drone.stop(); //temp thing so you don't lose the drone, remove when phase 3 is made
         }
     }
 
     private void phase3() {
-
-        return null;
     }
 
     public JSONObject phase4() {
