@@ -23,8 +23,10 @@ class MarineMission /*implements Mission*/ {
     public JSONObject takeDecision(Drone drone) {
         if (!faceGround) {
             phase1(drone);
-        } else {
+        } else if (!atGround) {
             phase2(drone);
+        } else {
+            
         }
         return decision;
     }
@@ -32,10 +34,13 @@ class MarineMission /*implements Mission*/ {
     public void checkResponse(JSONObject extraInfo) {
 
         if (!faceGround) {
-            checker.hasGrnd(extraInfo);
+            if (checker.hasGrnd(extraInfo)) {
+                range = extraInfo.getInt("range");
+                searchGround = false;
+            }
         } else if (atGround) { //during phase3
             checker.hasCriticalPts(extraInfo);
-            checker.hasOcean(extraInfo);
+            //checker.hasOcean(extraInfo);
         }
     }
 
@@ -76,8 +81,8 @@ class MarineMission /*implements Mission*/ {
         if (range > 0) {
             decision = drone.fly();
             range--;
-        } else if (!atGround) {
-            decision = drone.echoFwd(); //you have reached the island, check how far until you reach the edge of the island
+        } else {
+            decision = drone.stop(); //delete later
             atGround = true; //begin phase3
         }
     }
