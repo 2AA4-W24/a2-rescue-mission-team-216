@@ -56,13 +56,13 @@ public class Explorer implements IExplorerRaid {
         //returns nothing? interface specification won't allow return statements? I think?
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n" + response.toString(2));
-        MM.checkResponse(response);
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
+        MM.checkResponse(extraInfo);
         logger.info("Additional information received: {}", extraInfo);
     }
 
