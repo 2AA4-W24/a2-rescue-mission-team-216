@@ -32,10 +32,7 @@ class MarineMission /*implements Mission*/ {
     public void checkResponse(JSONObject extraInfo) {
 
         if (!faceGround) {
-            searchGround = (!checker.hasGrnd(extraInfo));
-            if (!searchGround && rangeDir.equals("F")) {
-                faceGround = true;
-            }
+            checker.hasGrnd(extraInfo);
         } else if (atGround) { //during phase3
             checker.hasCriticalPts(extraInfo);
             checker.hasOcean(extraInfo);
@@ -90,10 +87,13 @@ class MarineMission /*implements Mission*/ {
 
             if(offIsland){
                 decision = drone.echoFwd();
+                faceGround = false; //need to fix this later when we abstract checkResponse
             }
 
             decision = drone.fly();
             fly = false;
+
+
 
         } else if (!fly) {
             decision = drone.scan();
