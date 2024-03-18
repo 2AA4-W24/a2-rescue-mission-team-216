@@ -26,7 +26,7 @@ class MarineMission /*implements Mission*/ {
         } else if (!atGround) {
             phase2(drone);
         } else {
-            
+            phase3(drone);
         }
         return decision;
     }
@@ -40,7 +40,9 @@ class MarineMission /*implements Mission*/ {
             }
         } else if (atGround) { //during phase3
             checker.hasCriticalPts(extraInfo);
-            //checker.hasOcean(extraInfo);
+            if (checker.hasOcean(extraInfo)) {
+                offIsland = true;
+            }
         }
     }
 
@@ -78,31 +80,34 @@ class MarineMission /*implements Mission*/ {
     }
 
     private void phase2(Drone drone) {
-        if (range > 0) {
-            decision = drone.fly();
-            range--;
-        } else {
-            decision = drone.stop(); //delete later
-            atGround = true; //begin phase3
+
+        range--;
+
+        if (range <= 1) {
+            atGround = true;
         }
+        else {
+            decision = drone.fly();
+        }
+
     }
 
     private void phase3(Drone drone) {
-        if (fly) {
-
-            if(offIsland){
-                decision = drone.echoFwd();
-                faceGround = false; //need to fix this later when we abstract checkResponse
-            }
-
-            decision = drone.fly();
-            fly = false;
-
-
-
-        } else if (!fly) {
+        if (!fly) {
             decision = drone.scan();
             fly = true;
+        }
+        else if (fly) {
+
+            if(offIsland){
+                //decision = drone.echoFwd();
+                //faceGround = false; //need to fix this later when we abstract checkResponse
+                decision = drone.stop();
+            } else {
+                decision = drone.fly();
+                fly = false;
+            }
+
         }
 
 

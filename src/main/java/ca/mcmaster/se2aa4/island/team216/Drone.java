@@ -56,7 +56,7 @@ class Drone {
 
     public JSONObject fly(){
 
-        //might need to introduce an enum this is SOOO UGLY
+        //might need to introduce an enum
         if (direction.equals(init_direction)) {
             this.x += 1;
         } else if (direction.equals(Compass.left(init_direction))) {
