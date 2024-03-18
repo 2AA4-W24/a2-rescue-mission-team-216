@@ -44,6 +44,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         decision = MM.takeDecision(drone);
+        logger.info("Coordinates: {}", drone.coords());
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }

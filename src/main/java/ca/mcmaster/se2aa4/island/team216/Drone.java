@@ -54,13 +54,20 @@ class Drone {
         return decision;
     }
 
-    public JSONObject fly(){ //
-        decision.put("action", "fly");
+    public JSONObject fly(){
 
-        //if direction = init direction x +=1
-        //if direction = left of init y-=1
-        //if direction = right of init y += 1
-        //else x -= 1
+        //might need to introduce an enum
+        if (direction.equals(init_direction)) {
+            this.x += 1;
+        } else if (direction.equals(Compass.left(init_direction))) {
+            this.y -= 1;
+        } else if (direction.equals(Compass.right(init_direction))) {
+            this.y += 1;
+        } else {
+            this.x -= 1;
+        }
+
+        decision.put("action", "fly");
 
         return decision;
     }
@@ -89,6 +96,11 @@ class Drone {
     public JSONObject scan(){
         JSONObject result = scanner.scan();
         return result;
+    }
+
+    public int[] coords() {
+        int[] arr = {this.x, this.y};
+        return arr;
     }
 
 }

@@ -23,8 +23,10 @@ class MarineMission /*implements Mission*/ {
     public JSONObject takeDecision(Drone drone) {
         if (!faceGround) {
             phase1(drone);
-        } else {
+        } else if (!atGround) {
             phase2(drone);
+        } else {
+            phase3(drone);
         }
         return decision;
     }
@@ -32,10 +34,15 @@ class MarineMission /*implements Mission*/ {
     public void checkResponse(JSONObject extraInfo) {
 
         if (!faceGround) {
-            checker.hasGrnd(extraInfo);
+            if (checker.hasGrnd(extraInfo)) {
+                range = extraInfo.getInt("range");
+                searchGround = false;
+            }
         } else if (atGround) { //during phase3
             checker.hasCriticalPts(extraInfo);
-            checker.hasOcean(extraInfo);
+            if (checker.hasOcean(extraInfo)) {
+                offIsland = true;
+            }
         }
     }
 
@@ -73,31 +80,34 @@ class MarineMission /*implements Mission*/ {
     }
 
     private void phase2(Drone drone) {
-        if (range > 0) {
-            decision = drone.fly();
-            range--;
-        } else if (!atGround) {
-            decision = drone.echoFwd(); //you have reached the island, check how far until you reach the edge of the island
-            atGround = true; //begin phase3
+
+        range--;
+
+        if (range <= 1) {
+            atGround = true;
         }
+        else {
+            decision = drone.fly();
+        }
+
     }
 
     private void phase3(Drone drone) {
-        if (fly) {
-
-            if(offIsland){
-                decision = drone.echoFwd();
-                faceGround = false; //need to fix this later when we abstract checkResponse
-            }
-
-            decision = drone.fly();
-            fly = false;
-
-
-
-        } else if (!fly) {
+        if (!fly) {
             decision = drone.scan();
             fly = true;
+        }
+        else if (fly) {
+
+            if(offIsland){
+                //decision = drone.echoFwd();
+                //faceGround = false; //need to fix this later when we abstract checkResponse
+                decision = drone.stop();
+            } else {
+                decision = drone.fly();
+                fly = false;
+            }
+
         }
 
 
