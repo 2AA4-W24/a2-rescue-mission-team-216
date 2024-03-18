@@ -14,6 +14,9 @@ public class Explorer implements IExplorerRaid {
     //private JSONObject response = new JSONObject();
     JSONObject extraInfo;
     private MarineMission MM = new MarineMission();
+
+    private checkRsp checker = new checkRsp();
+
     private Drone drone; //move this into marine mission and only reference marine mission via mission
 
 //    private Mission mission;
@@ -62,7 +65,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
-        MM.checkResponse(extraInfo);
+        MM.transmitMsg(extraInfo);
         logger.info("Additional information received: {}", extraInfo);
     }
 

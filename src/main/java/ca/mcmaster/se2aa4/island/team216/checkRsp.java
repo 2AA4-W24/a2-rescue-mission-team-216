@@ -3,12 +3,19 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-class checkRsp {
+class checkRsp implements Radio {
 
     JSONArray creeks = new JSONArray();
     JSONArray sites = new JSONArray();
 
-    public boolean hasGrnd(JSONObject extraInfo){
+    JSONObject extraInfo;
+
+
+    public JSONObject getResp(){
+        return extraInfo;
+    }
+
+    public boolean hasGrnd(){
         if (extraInfo.has("found")) {
             String found = extraInfo.getString("found");
             if (found.equals("GROUND")) {
@@ -19,7 +26,7 @@ class checkRsp {
     }
 
 
-    public void hasCriticalPts(JSONObject extraInfo){
+    public void hasCriticalPts(){
         if (extraInfo.has("creeks")) {
             JSONArray creekID = extraInfo.getJSONArray("creeks");
             if (creekID.length() != 0) {
@@ -33,7 +40,7 @@ class checkRsp {
         }
     }
 
-    public boolean hasOcean(JSONObject extraInfo) {
+    public boolean hasOcean() {
         boolean ocean = false;
 
         if (extraInfo.has("biomes")) {
@@ -53,5 +60,16 @@ class checkRsp {
 
         return ocean;
     }
+
+    @Override
+    public void receiveMsg(JSONObject response) {
+        extraInfo = response;
+    }
+
+    @Override
+    public int transmitMsg(JSONObject message) {
+        return 0;
+    }
+
 
 }
