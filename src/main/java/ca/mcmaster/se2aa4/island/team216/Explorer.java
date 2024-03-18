@@ -51,7 +51,6 @@ public class Explorer implements IExplorerRaid {
 
 
 
-
     @Override
     public void acknowledgeResults(String s) { //takes in the string which is the decision made
         //returns nothing? interface specification won't allow return statements? I think?

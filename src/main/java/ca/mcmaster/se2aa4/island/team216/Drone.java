@@ -17,6 +17,7 @@ class Drone {
     private JSONObject decision;
     private JSONObject parameters;
 
+
     public Drone(String initializationInfo) { //class constructor
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(initializationInfo)));
         this.init_direction = info.getString("heading");
@@ -102,5 +103,9 @@ class Drone {
         int[] arr = {this.x, this.y};
         return arr;
     }
+
+//    public JSONObject uTurn(){
+//        turnLeft();
+//    }
 
 }
