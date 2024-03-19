@@ -2,32 +2,32 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-class Phase1 {
+public class Phase1 {
 
     JSONObject decision;
     boolean echoF = true;
     boolean echoL = false;
     boolean echoR = false;
     boolean fly = false;
-    static int range;
-    String rangeDir = null;
+    static Integer range;
+    static String groundDir;
 
-
-    private JSONObject Phase1(Drone drone, CheckRsp checker) {
+    public Phase1(Drone drone, CheckRsp checker) {
 
         JSONObject response = checker.getResp();
 
         if (checker.hasGrnd()) {
             range = response.getInt("range");
-            if (rangeDir.equals("L")) {
+            /*if (groundDir.equals("L")) {
                 decision = drone.turnLeft();
-            } else if (rangeDir.equals("R")) {
+            } else if (groundDir.equals("R")) {
                 decision = drone.turnRight();
             }
             else{
                 decision = drone.fly();
                 range--;
-            }
+            }*/
+            decision = null; //go to phase 3
         }
         else{
             if (fly) {
@@ -36,30 +36,36 @@ class Phase1 {
                 echoL = true;
             } else if (echoR) {
                 decision = drone.echoRight();
-                rangeDir = "R";
+                groundDir = "R";
                 echoR = false;
                 fly = true;
             } else if (echoL) {
                 decision = drone.echoLeft();
-                rangeDir = "L";
+                groundDir = "L";
                 echoL = false;
                 echoR = true;
             } else {
                 decision = drone.echoFwd();
-                rangeDir = "F";
+                groundDir = "F";
                 echoF = false;
                 echoL = true;
             }
         }
-        return decision;
     }
 
 
-    public static int getRange(){
+    public static Integer getRange(){
         return range;
     }
 
+    public static String getGroundDir() {
+        return groundDir;
+    }
     //needs to extract the range at the end and pass it into phase 2
+
+    public JSONObject getDecision() {
+        return this.decision;
+    }
 
 }
 

@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 class MarineMission implements Radio {
 
+    JSONObject decision;
+
     private CheckRsp checker = new CheckRsp();
 //    private Integer range;
 //    private String rangeDir;
@@ -28,9 +30,8 @@ class MarineMission implements Radio {
     }
 
     @Override
-    public int transmitMsg(JSONObject extraInfo) {
+    public void transmitMsg(JSONObject extraInfo) {
         checker.receiveMsg(extraInfo);
-        return -1; //for the sake of interface
     }
 
 
@@ -61,26 +62,8 @@ class MarineMission implements Radio {
 //        }
 
     public JSONObject takeDecision(Drone drone) {
-//        if (!faceGround) {
-//            phase1(drone);
-//        } else if (!atGround) {
-//            phase2(drone);
-//        } else {
-//            phase3(drone);
-//
-//        }
-//        return decision;
-
-        return null;
-
-    }
-
-
-    public JSONObject phase4() {
-        return null;
-    }
-
-    public JSONObject phase5() {
-        return null;
+        Phase1 phase1 = new Phase1(drone, checker);
+        decision = phase1.getDecision();
+        return decision;
     }
 }

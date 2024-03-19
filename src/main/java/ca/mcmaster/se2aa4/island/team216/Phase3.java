@@ -6,7 +6,7 @@ public class Phase3 {
     private Move2Grnd traveller = new Move2Grnd();
     JSONObject decision;
 
-    private JSONObject Phase3(Drone drone, CheckRsp checker) {
+    private Phase3(Drone drone, CheckRsp checker) {
 
         JSONObject response = checker.getResp();
 
@@ -16,10 +16,6 @@ public class Phase3 {
         else {
             decision = drone.scan();
         }
-
-        
-
-        return decision;
 
 
 //        if (scan){

@@ -67,8 +67,7 @@ class CheckRsp implements Radio {
     }
 
     @Override
-    public int transmitMsg(JSONObject message) {
-        return 0;
+    public void transmitMsg(JSONObject message) {
     }
 
 

@@ -6,6 +6,6 @@ public interface Radio {
 
 
     void receiveMsg(JSONObject message);
-    int transmitMsg(JSONObject message);
+    void transmitMsg(JSONObject message);
 
 }
