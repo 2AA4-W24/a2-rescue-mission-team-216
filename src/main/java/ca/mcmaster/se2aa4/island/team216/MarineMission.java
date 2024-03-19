@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 class MarineMission implements Radio {
 
-    private checkRsp checker = new checkRsp();
+    private CheckRsp checker = new CheckRsp();
 //    private Integer range;
 //    private String rangeDir;
 //    boolean searchGround = true;

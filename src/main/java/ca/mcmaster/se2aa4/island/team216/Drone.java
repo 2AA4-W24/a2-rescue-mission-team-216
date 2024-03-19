@@ -13,7 +13,7 @@ class Drone {
     private int y = 0;
     private Integer batteryLevel;
     private Radar radar; // Adding a Radar instance variable
-    private photoScanner scanner;
+    private PhotoScanner scanner;
     private JSONObject decision;
     private JSONObject parameters;
 
@@ -24,7 +24,7 @@ class Drone {
         this.direction = info.getString("heading");
         this.batteryLevel = info.getInt("budget");
         this.radar = new Radar();
-        this.scanner = new photoScanner();
+        this.scanner = new PhotoScanner();
         this.decision = new JSONObject();
         this.parameters = new JSONObject();
     }

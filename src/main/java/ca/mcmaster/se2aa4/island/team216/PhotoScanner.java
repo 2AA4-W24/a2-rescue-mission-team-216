@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class photoScanner {
+public class PhotoScanner {
 
     private JSONObject decision = new JSONObject();
     public JSONObject scan(){

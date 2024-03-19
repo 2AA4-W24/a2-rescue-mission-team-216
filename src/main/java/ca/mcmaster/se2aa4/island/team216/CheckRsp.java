@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-class checkRsp implements Radio {
+class CheckRsp implements Radio {
 
     JSONArray creeks = new JSONArray();
     JSONArray sites = new JSONArray();

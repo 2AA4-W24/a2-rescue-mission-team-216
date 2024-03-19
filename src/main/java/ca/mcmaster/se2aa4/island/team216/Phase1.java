@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-class phase1 {
+class Phase1 {
 
     JSONObject decision;
     boolean echoF = true;
@@ -13,7 +13,7 @@ class phase1 {
     String rangeDir = null;
 
 
-    private JSONObject phase1(Drone drone, checkRsp checker) {
+    private JSONObject Phase1(Drone drone, CheckRsp checker) {
 
         JSONObject response = checker.getResp();
 

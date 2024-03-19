@@ -15,7 +15,7 @@ public class Explorer implements IExplorerRaid {
     JSONObject extraInfo;
     private MarineMission MM = new MarineMission();
 
-    private checkRsp checker = new checkRsp();
+    private CheckRsp checker = new CheckRsp();
 
     private Drone drone; //move this into marine mission and only reference marine mission via mission
 

@@ -27,27 +27,3 @@ class Radar {
     }
 
 }
-
-//
-//    private void detect2(JSONObject decision) {
-//        JSONObject parameters = new JSONObject();
-//        if (c == 0) {
-//            decision.put("parameters", parameters.put("direction", "E")); //change the direction
-//            decision.put("action", "echo");
-//            c+=1;
-//        } else if (c == 1) {
-//            decision.put("parameters", parameters.put("direction", "N")); //change the direction
-//            decision.put("action", "echo");
-//            c+=1;
-//        }
-//        else if (c == 2) {
-//            decision.put("parameters", parameters.put("direction", "S")); //change the direction
-//            decision.put("action", "echo");
-//            c+=1;
-//        } else {
-//            decision.put("action","fly");
-//            c=0;
-//        }
-//        Decision = decision.toString();
-//    }
-//}

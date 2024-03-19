@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class phase3 {
-    private move2Grnd traveller = new move2Grnd();
+public class Phase3 {
+    private Move2Grnd traveller = new Move2Grnd();
     JSONObject decision;
 
-    private JSONObject phase3(Drone drone, checkRsp checker) {
+    private JSONObject Phase3(Drone drone, CheckRsp checker) {
 
         JSONObject response = checker.getResp();
 
