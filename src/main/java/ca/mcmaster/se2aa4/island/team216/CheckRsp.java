@@ -8,7 +8,7 @@ class CheckRsp implements Radio {
     JSONArray creeks = new JSONArray();
     JSONArray sites = new JSONArray();
 
-    JSONObject extraInfo;
+    JSONObject extraInfo = new JSONObject();
 
 
     public JSONObject getResp(){

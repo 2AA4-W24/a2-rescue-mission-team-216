@@ -8,6 +8,10 @@ class MarineMission implements Radio {
     JSONObject decision;
 
     private CheckRsp checker = new CheckRsp();
+    private Phase1 phase1 = new Phase1();
+    private Phase2 phase2;
+    private Phase3 phase3 = new Phase3();
+    int c = 250;
 //    private Integer range;
 //    private String rangeDir;
 //    boolean searchGround = true;
@@ -62,8 +66,20 @@ class MarineMission implements Radio {
 //        }
 
     public JSONObject takeDecision(Drone drone) {
-        Phase1 phase1 = new Phase1(drone, checker);
-        decision = phase1.getDecision();
+        if (c > 0) {
+            if (!phase1.isDone()) {
+                decision = phase1.searchGrnd(drone, checker);
+            } else if (phase2 == null) {
+                phase2 = new Phase2();
+            } else if (!phase2.isDone()) {
+                decision = phase2.travIsland(drone, checker);
+            } else {
+                decision = phase3.scanner(drone, checker);
+            }
+            c--;
+        } else {
+            decision = drone.stop();
+        }
         return decision;
     }
 }
