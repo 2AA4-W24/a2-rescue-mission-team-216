@@ -63,7 +63,7 @@ class CheckRsp implements Radio {
 
     @Override
     public void receiveMsg(JSONObject response) {
-        extraInfo = response;
+        extraInfo = response.getJSONObject("extras");
     }
 
     @Override
