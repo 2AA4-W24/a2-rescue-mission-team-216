@@ -51,17 +51,14 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
-        if (c>0){
+
+        if (drone.getBatteryLevel() >= 20){
             decision = MarineMission.takeDecision();
-            c--;
         }
         else{
             decision = drone.stop();
         }
 
-//        if (drone.getBatteryLevel() < 15) {
-//            decision = drone.stop();
-//        }
         logger.info("Coordinates: {}", drone.coords());
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -76,8 +73,6 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n" + response.toString(2));
         Integer cost = response.getInt("cost");
         drone.updateBattery(cost);
-
-
 
         logger.info("The cost of the action was {}", cost);
         logger.info("The current battery is {}", drone.getBatteryLevel());
