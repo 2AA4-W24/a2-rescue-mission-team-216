@@ -2,32 +2,34 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class Phase1 {
+class Phase1 {
 
     JSONObject decision;
     boolean echoF = true;
     boolean echoL = false;
     boolean echoR = false;
     boolean fly = false;
-    static Integer range;
+    static int range;
     static String groundDir;
+    boolean done = false;
 
-    public Phase1(Drone drone, CheckRsp checker) {
-
-        JSONObject response = checker.getResp();
+    public JSONObject searchGrnd(Drone drone, CheckRsp checker) {
 
         if (checker.hasGrnd()) {
+            JSONObject response = checker.getResp();
             range = response.getInt("range");
-            /*if (groundDir.equals("L")) {
+
+            /*
+            if (groundDir.equals("L")) {
                 decision = drone.turnLeft();
             } else if (groundDir.equals("R")) {
                 decision = drone.turnRight();
             }
             else{
-                decision = drone.fly();
-                range--;
+                done = true;
             }*/
-            decision = null; //go to phase 3
+            decision = drone.fly();
+            done = true;
         }
         else{
             if (fly) {
@@ -51,10 +53,11 @@ public class Phase1 {
                 echoL = true;
             }
         }
+        return decision;
     }
 
 
-    public static Integer getRange(){
+    public static int getRange(){
         return range;
     }
 
@@ -63,9 +66,10 @@ public class Phase1 {
     }
     //needs to extract the range at the end and pass it into phase 2
 
-    public JSONObject getDecision() {
-        return this.decision;
+    public boolean isDone() {
+        return done;
     }
+
 
 }
 

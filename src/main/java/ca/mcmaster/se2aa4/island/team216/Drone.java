@@ -41,17 +41,33 @@ class Drone {
 
     //turning left & right (heading)
 
+
+    public void updateBattery(int cost) {
+        this.batteryLevel -= cost;
+    }
     public JSONObject turnRight() {
         this.direction = Compass.right(direction);
-        decision.put("parameters", parameters.put("direction", direction));
-        decision.put("action", "heading");
+
+        if (this.batteryLevel <= 7)
+            decision = stop();
+        else {
+            decision.put("parameters", parameters.put("direction", direction));
+            decision.put("action", "heading");
+        }
+
         return decision;
     }
 
     public JSONObject turnLeft() {
         this.direction = Compass.left(direction);
-        decision.put("parameters", parameters.put("direction", direction));
-        decision.put("action", "heading");
+
+        if (this.batteryLevel <= 7)
+            decision = stop();
+        else {
+            decision.put("parameters", parameters.put("direction", direction));
+            decision.put("action", "heading");
+        }
+
         return decision;
     }
 
@@ -68,7 +84,11 @@ class Drone {
             this.x -= 1;
         }
 
-        decision.put("action", "fly");
+        if (this.batteryLevel <= 5)
+            decision = stop();
+        else {
+            decision.put("action", "fly");
+        }
 
         return decision;
     }
@@ -80,32 +100,48 @@ class Drone {
 
     //echoing
     public JSONObject echoFwd() {
-        JSONObject result = radar.echoFwd(direction);
-        return result;
+        if (this.batteryLevel <= 6)
+            decision = stop();
+        else {
+            decision = radar.echoFwd(direction);
+        }
+
+        return decision;
     }
 
     public JSONObject echoRight() {
-        JSONObject result = radar.echoRight(direction);
-        return result;
+        if (this.batteryLevel <= 6)
+            decision = stop();
+        else {
+            decision = radar.echoRight(direction);
+        }
+
+        return decision;
     }
 
     public JSONObject echoLeft() {
-        JSONObject result = radar.echoLeft(direction);
-        return result;
+        if (this.batteryLevel <= 6)
+            decision = stop();
+        else {
+            decision = radar.echoLeft(direction);
+        }
+
+        return decision;
     }
 
     public JSONObject scan(){
-        JSONObject result = scanner.scan();
-        return result;
+        if (this.batteryLevel <= 7)
+            decision = stop();
+        else {
+            decision.put("action", "scan");
+        }
+
+        return decision;
     }
 
     public int[] coords() {
         int[] arr = {this.x, this.y};
         return arr;
     }
-
-//    public JSONObject uTurn(){
-//        turnLeft();
-//    }
 
 }

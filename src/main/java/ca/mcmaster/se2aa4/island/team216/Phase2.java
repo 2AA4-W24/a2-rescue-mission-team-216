@@ -2,16 +2,28 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class Phase2 {
+class Phase2 {
     private Move2Grnd traveller = new Move2Grnd();
+    int range = Phase1.getRange();
     String groundDir = Phase1.getGroundDir();
-    Integer range = Phase1.getRange();
+    boolean done = false;
     JSONObject decision;
 
-    public Phase2(Drone drone) {
+    public JSONObject travIsland(Drone drone, CheckRsp checker) {
+
         switch (groundDir) {
             case "F":
-                move2Grnd(drone);
+                //move2Grnd(drone);
+                range--;
+
+                if (range < 0) {
+                    decision = drone.scan();
+                    done = true;
+                }
+                else {
+                    decision = drone.fly();
+                }
+
                 break;
 
             case ("L"):
@@ -25,13 +37,15 @@ public class Phase2 {
                 break;
         }
 
+        return decision;
     }
 
-    private void move2Grnd(Drone drone) {
+    /*private void move2Grnd(Drone drone) {
         this.decision = traveller.travel(drone, range); //???? how do we get drone into this class
+    }*/
+
+    public boolean isDone() {
+        return done;
     }
 
-    public JSONObject getDecision() {
-        return this.decision;
-    }
 }

@@ -8,7 +8,7 @@ class CheckRsp implements Radio {
     JSONArray creeks = new JSONArray();
     JSONArray sites = new JSONArray();
 
-    JSONObject extraInfo;
+    JSONObject extraInfo = new JSONObject();
 
 
     public JSONObject getResp(){
@@ -63,7 +63,7 @@ class CheckRsp implements Radio {
 
     @Override
     public void receiveMsg(JSONObject response) {
-        extraInfo = response;
+        extraInfo = response.getJSONObject("extras");
     }
 
     @Override
