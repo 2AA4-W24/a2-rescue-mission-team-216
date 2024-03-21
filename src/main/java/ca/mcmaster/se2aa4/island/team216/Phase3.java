@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONObject;
 
 class Phase3 {
-    private Move2Grnd traveller = new Move2Grnd();
+//    private Move2Grnd traveller = new Move2Grnd();
     JSONObject decision;
     boolean echoed = false;
     boolean turned = false;

@@ -3,7 +3,6 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONObject;
 
 class Phase2 {
-    private Move2Grnd traveller = new Move2Grnd();
     int range = Phase1.getRange();
     String groundDir = Phase1.getGroundDir();
     boolean done = false;
