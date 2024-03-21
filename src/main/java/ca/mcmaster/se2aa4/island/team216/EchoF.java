@@ -12,6 +12,10 @@ public class EchoF implements State {
         context.setLastEchoDirection("F");
 
         context.changeState(new CheckGrnd());
+
+        if (context.phase3){
+            context.changeState(new StillIsland());
+        }
         return decision;
     }
 }

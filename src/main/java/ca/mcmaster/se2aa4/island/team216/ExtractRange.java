@@ -9,6 +9,7 @@ public class ExtractRange implements State{
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
         if (context.range > 0){
             decision = drone.fly();
+            context.range--;
         }
         else {
             context.changeState(new GridFly());

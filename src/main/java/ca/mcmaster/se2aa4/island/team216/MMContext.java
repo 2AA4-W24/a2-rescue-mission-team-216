@@ -5,14 +5,16 @@ import org.json.JSONObject;
 public class MMContext {
     private State state;
     private Drone drone;
-    private CheckRsp checker;
+    private CheckRsp checker = new CheckRsp();
     private JSONObject decision;
     private String lastEchoed = "";
     public Integer range = -1;
     public Boolean phase3 = false;
+    private Boolean left = true;
 
-    public MMContext() {
+    public MMContext(Drone drone) {
         this.state = new EchoF(); // Initial state is echoing fwd
+        this.drone = drone;
     }
 
     public void handle() {
@@ -29,6 +31,27 @@ public class MMContext {
 
     public void setLastEchoDirection(String lastEchoed) {
         this.lastEchoed = lastEchoed;
+    }
+
+    public JSONObject takeDecision() {
+
+        do {
+            decision = state.handle(this, drone, checker);
+        } while (decision == null);
+
+        return decision;
+    }
+
+    public void transmitMsg(JSONObject response) {
+        checker.receiveMsg(response);
+    }
+
+    public void switchDir() {
+        left = !left;
+    }
+
+    public boolean turnLeft() {
+        return left;
     }
 
 

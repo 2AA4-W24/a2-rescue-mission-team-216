@@ -7,8 +7,8 @@ public class EchoR implements State{
     JSONObject decision;
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        decision = drone.echoLeft();
-        context.setLastEchoDirection("L");
+        decision = drone.echoRight();
+        context.setLastEchoDirection("R");
 
         context.changeState(new CheckGrnd());
         return decision;

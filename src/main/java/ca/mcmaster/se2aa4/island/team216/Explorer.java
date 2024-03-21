@@ -13,9 +13,12 @@ public class Explorer implements IExplorerRaid {
     private final Logger logger = LogManager.getLogger();
     //private JSONObject response = new JSONObject();
     JSONObject extraInfo;
-    private MarineMission MM = new MarineMission();
+    private MMContext MarineMission;
+    int c = 700;
 
-    private CheckRsp checker = new CheckRsp();
+
+
+
 
     private Drone drone; //move this into marine mission and only reference marine mission via mission
 
@@ -39,6 +42,8 @@ public class Explorer implements IExplorerRaid {
         String direction = drone.getDirection();
         Integer batteryLevel = drone.getBatteryLevel();
 
+        MarineMission = new MMContext(drone);
+
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
     }
@@ -46,7 +51,17 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
-        decision = MM.takeDecision(drone);
+        if (c>0){
+            decision = MarineMission.takeDecision();
+            c--;
+        }
+        else{
+            decision = drone.stop();
+        }
+
+//        if (drone.getBatteryLevel() < 15) {
+//            decision = drone.stop();
+//        }
         logger.info("Coordinates: {}", drone.coords());
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -61,13 +76,16 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n" + response.toString(2));
         Integer cost = response.getInt("cost");
         drone.updateBattery(cost);
+
+
+
         logger.info("The cost of the action was {}", cost);
         logger.info("The current battery is {}", drone.getBatteryLevel());
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         logger.info("The drone is facing {}", drone.getDirection());
         extraInfo = response.getJSONObject("extras");
-        MM.transmitMsg(response);
+        MarineMission.transmitMsg(response);
         logger.info("Additional information received: {}", extraInfo);
     }
 

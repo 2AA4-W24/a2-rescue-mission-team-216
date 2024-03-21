@@ -20,6 +20,7 @@ public class CheckGrnd implements State{
                 context.range --;
             } else if (context.getLastEchoDirection().equals("L")) {
                 decision = drone.turnLeft();
+                context.switchDir(); //ensures the first Uturn is right not left
             }
             else {
                 decision = drone.turnRight();

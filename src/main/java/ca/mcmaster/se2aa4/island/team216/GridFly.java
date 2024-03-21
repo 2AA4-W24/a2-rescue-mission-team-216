@@ -20,8 +20,8 @@ public class GridFly implements State {
                 context.changeState(new Scan());
             }
         }
-        decision = drone.fly();
-        context.changeState(new Scan());
+        //decision = drone.fly();
+        //context.changeState(new Scan());
 
         return decision;
     }

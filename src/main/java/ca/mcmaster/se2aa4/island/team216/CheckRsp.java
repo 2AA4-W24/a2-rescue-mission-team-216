@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-class CheckRsp implements Radio {
+class CheckRsp {
 
     JSONArray creeks = new JSONArray();
     JSONArray sites = new JSONArray();
@@ -77,12 +77,11 @@ class CheckRsp implements Radio {
         return ocean;
     }
 
-    @Override
+
     public void receiveMsg(JSONObject response) {
         extraInfo = response.getJSONObject("extras");
     }
 
-    @Override
     public void transmitMsg(JSONObject message) {
     }
 

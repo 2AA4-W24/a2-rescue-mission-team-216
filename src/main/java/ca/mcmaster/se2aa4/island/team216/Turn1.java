@@ -6,7 +6,12 @@ public class Turn1 implements State{
     JSONObject decision;
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        decision = drone.turnLeft();
+        if (context.turnLeft()) {
+            decision = drone.turnLeft();
+        } else {
+            decision = drone.turnRight();
+        }
+
         context.changeState(new Turn2());
         return decision;
     }
