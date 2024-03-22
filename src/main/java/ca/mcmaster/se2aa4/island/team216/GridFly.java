@@ -7,15 +7,16 @@ public class GridFly implements State {
 
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+        checker.hasCreeks();
+        checker.hasSites();
 
         context.phase3 = true;
 
         if (checker.getResp().has("biomes")) { //last decision was a scan
             if (checker.hasOcean()) {
                 context.changeState(new EchoF());
+
             } else {
-                checker.hasCreeks();
-                checker.hasSites();
                 decision = drone.fly();
                 context.changeState(new Scan());
             }
