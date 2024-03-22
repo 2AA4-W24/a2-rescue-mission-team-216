@@ -2,9 +2,10 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class Reverse implements State{
+public class ReverseTurn1 implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+        context.switchDir(); //temp
 
         JSONObject decision;
 
@@ -14,7 +15,7 @@ public class Reverse implements State{
             decision = drone.turnRight();
         }
 
-        context.changeState(new Reverse2());
+        context.changeState(new ReverseFly());
 
         return decision;
     }

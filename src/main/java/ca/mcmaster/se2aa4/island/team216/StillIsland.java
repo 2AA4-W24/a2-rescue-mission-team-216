@@ -14,7 +14,7 @@ public class StillIsland implements State{
         }
         else{
             if (!context.secondPart) {
-                context.changeState(new Reverse());
+                context.changeState(new ReverseTurn1());
             } else {
                 decision = drone.stop();
             }
