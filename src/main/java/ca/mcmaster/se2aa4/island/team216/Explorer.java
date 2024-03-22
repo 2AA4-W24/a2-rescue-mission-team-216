@@ -15,11 +15,6 @@ public class Explorer implements IExplorerRaid {
     JSONObject extraInfo;
     private MMContext MarineMission;
     int c = 700;
-
-
-
-
-
     private Drone drone; //move this into marine mission and only reference marine mission via mission
 
 //    private Mission mission;
@@ -52,12 +47,15 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
 
-        if (drone.getBatteryLevel() >= 20){
+        if (drone.getBatteryLevel() >= 30){
             decision = MarineMission.takeDecision();
         }
         else{
             decision = drone.stop();
         }
+
+        logger.info("Creeks: {}", MarineMission.getCreeks());
+        logger.info("Sites: {}", MarineMission.getSites());
 
         logger.info("Coordinates: {}", drone.coords());
         logger.info("** Decision: {}", decision.toString());

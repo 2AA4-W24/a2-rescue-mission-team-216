@@ -16,6 +16,7 @@ public class Turn2 implements State{
         }
 
         context.switchDir();
+        context.turnComplete = true;
         context.changeState(new EchoF());
         return decision;
     }

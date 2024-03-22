@@ -5,14 +5,20 @@ import org.json.JSONObject;
 public class StillIsland implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        JSONObject decision;
+        JSONObject decision = null;
 
         if(checker.hasGrnd()) {
-            context.changeState(new Scan());
+            JSONObject response = checker.getResp();
+            context.range = response.getInt("range");
+            context.changeState(new ExtractRange());
         }
         else{
-            context.changeState(new Reverse());
+            if (!context.secondPart) {
+                context.changeState(new Reverse());
+            } else {
+                decision = drone.stop();
+            }
         }
-        return null;
+        return decision;
     }
 }
