@@ -10,14 +10,13 @@ public class CheckGrnd implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
 
-
         if(checker.hasGrnd()){
             JSONObject response = checker.getResp();
             context.range = response.getInt("range"); //extracting the range
 
             if(context.getLastEchoDirection().equals("F")){
                 decision = drone.fly();
-                context.range --;
+                context.range--;
             } else if (context.getLastEchoDirection().equals("L")) {
                 decision = drone.turnLeft();
                 context.switchDir(); //ensures the first Uturn is right not left

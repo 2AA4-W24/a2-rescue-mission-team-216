@@ -8,7 +8,9 @@ public class StillIsland implements State{
         JSONObject decision;
 
         if(checker.hasGrnd()) {
-            context.changeState(new Scan());
+            JSONObject response = checker.getResp();
+            context.range = response.getInt("range");
+            context.changeState(new ExtractRange());
         }
         else{
             context.changeState(new Reverse());

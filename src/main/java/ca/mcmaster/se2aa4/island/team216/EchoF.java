@@ -13,7 +13,8 @@ public class EchoF implements State {
 
         context.changeState(new CheckGrnd());
 
-        if (context.phase3){
+        if (context.turnComplete){
+            context.turnComplete = false;
             context.changeState(new StillIsland());
         }
         return decision;

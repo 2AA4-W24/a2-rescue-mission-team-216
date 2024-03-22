@@ -11,7 +11,7 @@ public class MMContext {
     public Integer range = -1;
     public Boolean phase3 = false;
     private Boolean left = true;
-
+    public Boolean turnComplete = false;
     public MMContext(Drone drone) {
         this.state = new EchoF(); // Initial state is echoing fwd
         this.drone = drone;
