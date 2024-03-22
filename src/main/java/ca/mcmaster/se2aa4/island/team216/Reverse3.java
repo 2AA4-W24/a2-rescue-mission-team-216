@@ -14,7 +14,10 @@ public class Reverse3 implements State{
             decision = drone.turnRight();
         }
 
-        context.changeState(new Reverse4());
+        //context.changeState(new Reverse4());
+        context.changeState(new Scan());//temp
+        context.secondPart = true;//temp
+        context.switchDir();//temp
 
         return decision;
     }

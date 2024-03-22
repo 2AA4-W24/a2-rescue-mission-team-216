@@ -5,6 +5,7 @@ import org.json.JSONObject;
 public class Reverse implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+        context.switchDir(); //temp
 
         JSONObject decision;
 
