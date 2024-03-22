@@ -8,11 +8,14 @@ public class Reverse2 implements State{
 
         JSONObject decision;
 
-        if (context.turnLeft()) {
+        /*if (context.turnLeft()) {
             decision = drone.turnLeft();
         } else {
             decision = drone.turnRight();
-        }
+        }*/
+
+        decision = drone.fly(); //temp
+        context.switchDir();//temp
 
         context.changeState(new Reverse3());
 
