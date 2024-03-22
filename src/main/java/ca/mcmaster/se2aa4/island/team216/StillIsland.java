@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class StillIsland implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        JSONObject decision;
+        JSONObject decision = null;
 
         if(checker.hasGrnd()) {
             JSONObject response = checker.getResp();
@@ -13,8 +13,12 @@ public class StillIsland implements State{
             context.changeState(new ExtractRange());
         }
         else{
-            context.changeState(new Reverse());
+            if (!context.secondPart) {
+                context.changeState(new Reverse());
+            } else {
+                decision = drone.stop();
+            }
         }
-        return null;
+        return decision;
     }
 }

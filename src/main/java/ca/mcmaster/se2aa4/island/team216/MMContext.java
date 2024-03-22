@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class MMContext {
     private State state;
@@ -12,6 +13,7 @@ public class MMContext {
     public Boolean phase3 = false;
     private Boolean left = true;
     public Boolean turnComplete = false;
+    public Boolean secondPart = false;
     public MMContext(Drone drone) {
         this.state = new EchoF(); // Initial state is echoing fwd
         this.drone = drone;
@@ -54,6 +56,11 @@ public class MMContext {
         return left;
     }
 
+    public JSONArray getCreeks() {
+        return checker.creeks;
+    }
 
-
+    public JSONArray getSites() {
+        return checker.sites;
+    }
 }

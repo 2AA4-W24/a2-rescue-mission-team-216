@@ -5,6 +5,17 @@ import org.json.JSONObject;
 public class Reverse implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        return drone.stop();
+
+        JSONObject decision;
+
+        if (context.turnLeft()) {
+            decision = drone.turnLeft();
+        } else {
+            decision = drone.turnRight();
+        }
+
+        context.changeState(new Reverse2());
+
+        return decision;
     }
 }
