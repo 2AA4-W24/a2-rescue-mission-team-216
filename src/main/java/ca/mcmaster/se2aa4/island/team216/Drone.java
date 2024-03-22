@@ -9,8 +9,8 @@ import java.io.StringReader;
 class Drone {
     private String direction;
     private String init_direction;
-    private int x = 0;
-    private int y = 0;
+    private double x = 0;
+    private double y = 0;
     private Integer batteryLevel;
     private Radar radar; // Adding a Radar instance variable
     private JSONObject decision;
@@ -101,8 +101,8 @@ class Drone {
         return decision;
     }
 
-    public int[] coords() {
-        int[] arr = {this.x, this.y};
+    public double[] coords() {
+        double[] arr = {this.x, this.y};
         return arr;
     }
 
