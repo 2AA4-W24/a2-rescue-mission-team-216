@@ -18,7 +18,7 @@ class AddPOIs implements State{
             context.updateSites(siteID);
         }
 
-        context.changeState(new GridFly()); //should we rename to checksites/checkcreeks?
+        context.changeState(new GridFly());
 
         return null;
     }

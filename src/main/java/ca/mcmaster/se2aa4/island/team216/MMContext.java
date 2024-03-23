@@ -14,6 +14,7 @@ class MMContext {
     private JSONObject decision;
     private String lastEchoed = "";
     public Integer range = -1;
+    private Object rescueCreek = null;
 
     private Boolean turnLeft = true;
     public Boolean turnComplete = false;
@@ -91,5 +92,15 @@ class MMContext {
         return sites;
     }
 
+    public HashMap<Object, double[]> getCreekLocation(){
+        return CreekLocation;
+    }
+    public HashMap<JSONArray, double[]> getSiteLocation(){
+        return SiteLocation;
+    }
+
+    public void rescueCreek(Object creek){
+        rescueCreek = creek;
+    }
 
 }

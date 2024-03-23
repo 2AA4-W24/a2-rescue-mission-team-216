@@ -1,6 +1,9 @@
 package ca.mcmaster.se2aa4.island.team216;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 class StillIsland implements State{
     @Override
@@ -15,10 +18,20 @@ class StillIsland implements State{
         else{
             if (!context.secondScan) {
                 context.changeState(new ReverseTurn1());
+
             } else {
+
+                ClosestCreek locate = new ClosestCreek();
+
+                HashMap<Object, double[]> creeks = context.getCreekLocation();
+                HashMap<JSONArray, double[]> sites = context.getSiteLocation();
+
+                HashMap<Object, double> distance = locate.calculateDistance(creeks, sites);
+                Object closestCreek = locate.rescueCreek(distance); //what now?
+                context.rescueCreek(closestCreek);
+
                 decision = drone.stop();
-                //go to a final state
-                //this shouldnt be part of this state anyway
+
             }
         }
         return decision;
