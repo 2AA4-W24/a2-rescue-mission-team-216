@@ -6,8 +6,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 class Radar {
-    private JSONObject decision = new JSONObject();
-    private JSONObject parameters = new JSONObject();
+    private final JSONObject decision = new JSONObject();
+    private final JSONObject parameters = new JSONObject();
 
     public JSONObject echoFwd(String dir){
         decision.put("parameters", parameters.put("direction", dir)); //setting the parameter as the current direction

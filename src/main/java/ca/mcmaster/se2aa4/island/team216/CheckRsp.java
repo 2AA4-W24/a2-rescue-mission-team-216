@@ -7,9 +7,13 @@ class CheckRsp {
 
     JSONObject extraInfo = new JSONObject();
 
-    public JSONObject getResp(){
-        return extraInfo;
+
+    public void receiveMsg(JSONObject response) {
+        extraInfo = response.getJSONObject("extras");
     }
+
+    public JSONObject getResp(){return extraInfo;}
+
 
     public boolean hasGrnd(){
         if (extraInfo.has("found")) {
@@ -19,38 +23,6 @@ class CheckRsp {
             }
         }
         return false;
-    }
-
-
-    public JSONArray checkCreeks(){ //change to checkCreeks
-        /*if (extraInfo.has("creeks")) {
-            JSONArray creekID = extraInfo.getJSONArray("creeks");
-
-            for (Object o : creekID) {
-                creeks.put(o);
-            }
-
-        }*/
-        JSONArray creekID = new JSONArray();
-        if (extraInfo.has("creeks")) {
-            creekID = extraInfo.getJSONArray("creeks");
-        }
-        return (creekID);
-    }
-
-    public JSONArray checkSites(){ //change to checkSites
-        /*if (extraInfo.has("sites")) {
-            JSONArray siteID = extraInfo.getJSONArray("sites");
-            if (!siteID.isEmpty()) {
-                sites = siteID;
-            }
-        }*/
-
-        JSONArray siteID = new JSONArray();
-        if (extraInfo.has("sites")) {
-            siteID = extraInfo.getJSONArray("sites");
-        }
-        return (siteID);
     }
 
     public boolean hasOcean() {
@@ -74,13 +46,22 @@ class CheckRsp {
         return ocean;
     }
 
+    public JSONArray checkCreeks(){
 
-    public void receiveMsg(JSONObject response) {
-        extraInfo = response.getJSONObject("extras");
+        JSONArray creekID = new JSONArray();
+        if (extraInfo.has("creeks")) {
+            creekID = extraInfo.getJSONArray("creeks");
+        }
+        return (creekID);
     }
 
-    public void transmitMsg(JSONObject message) {
-    }
+    public JSONArray checkSites(){
 
+        JSONArray siteID = new JSONArray();
+        if (extraInfo.has("sites")) {
+            siteID = extraInfo.getJSONArray("sites");
+        }
+        return (siteID);
+    }
 
 }

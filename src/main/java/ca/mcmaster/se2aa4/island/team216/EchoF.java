@@ -8,7 +8,6 @@ public class EchoF implements State {
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
 
-        JSONObject decision = drone.echoFwd();
         context.setLastEchoDirection("F");
 
         context.changeState(new CheckGrnd());
@@ -17,6 +16,7 @@ public class EchoF implements State {
             context.turnComplete = false;
             context.changeState(new StillIsland());
         }
-        return decision;
+
+        return drone.echoFwd();
     }
 }

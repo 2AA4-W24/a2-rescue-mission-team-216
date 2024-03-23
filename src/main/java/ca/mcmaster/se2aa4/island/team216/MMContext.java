@@ -15,28 +15,31 @@ public class MMContext {
     private String lastEchoed = "";
     public Integer range = -1;
 
-    public Boolean phase3 = false; //temporary???
-    private Boolean left = true; //rename
+    private Boolean turnLeft = true;
     public Boolean turnComplete = false;
-    public Boolean secondPart = false; //temporary
-    public JSONArray creeks = new JSONArray(); //CHANGE BACK TO PRIV
-    public JSONArray sites = new JSONArray(); //CHANGE BACK TO PRIV
-    public HashMap<Object, double[]> Creeks = new HashMap<>();
-    public HashMap<JSONArray, double[]> Sites = new HashMap<>();
-    private double[] distances;
+    public Boolean secondScan = false; //temporary
+
+    private JSONArray creeks = new JSONArray();
+    private JSONArray sites = new JSONArray();
+    private HashMap<Object, double[]> CreekLocation = new HashMap<>();
+    private HashMap<JSONArray, double[]> SiteLocation = new HashMap<>();
+    private HashMap<Object, double[]> Distance = new HashMap<>();
 
     public MMContext(Drone drone) {
-        //this.state = new EchoF(); // Initial state is echoing fwd
         this.state = new EchoL();
         this.drone = drone;
     }
 
     public void handle() {
-        state.handle(this, drone, checker); // Delegate action to the current state
+        state.handle(this, drone, checker);
     }
 
     public void changeState(State newState) {
-        this.state = newState; // Change the current state to a new state
+        this.state = newState;
+    }
+
+    public void transmitMsg(JSONObject response) {
+        checker.receiveMsg(response);
     }
 
     public String getLastEchoDirection() {
@@ -56,30 +59,37 @@ public class MMContext {
         return decision;
     }
 
-    public void transmitMsg(JSONObject response) {
-        checker.receiveMsg(response);
-    }
-
     public void switchDir() {
-        left = !left;
+        turnLeft = !turnLeft;
     }
 
     public boolean turnLeft() {
-        return left;
+        return turnLeft;
     }
 
     public void updateCreeks(JSONArray creekID) {
         double[] coords = drone.coords();
-        //add to hashmap
         for (Object o : creekID) {
-            Creeks.put(o,coords);
+            CreekLocation.put(o,coords);
+            creeks.put(o);
         }
     }
 
     public void updateSites(JSONArray siteID) {
         double[] coords = drone.coords();
-        //add to hashmap
-        Sites.put(siteID, coords);
+        SiteLocation.put(siteID, coords);
+        sites = siteID;
     }
+
+
+    //to print in the final report
+    public JSONArray getCreeks(){
+        return creeks;
+    }
+
+    public JSONArray getSites(){
+        return sites;
+    }
+
 
 }

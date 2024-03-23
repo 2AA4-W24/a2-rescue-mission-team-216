@@ -14,7 +14,7 @@ public class ReverseTurn2 implements State{
             decision = drone.turnRight();
         }
         context.changeState(new Scan());
-        context.secondPart = true;
+        context.secondScan = true;
         context.switchDir();
 
         return decision;

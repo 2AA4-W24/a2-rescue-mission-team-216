@@ -10,10 +10,10 @@ public class StillIsland implements State{
         if(checker.hasGrnd()) {
             JSONObject response = checker.getResp();
             context.range = response.getInt("range");
-            context.changeState(new ExtractRange());
+            context.changeState(new Move2Grnd());
         }
         else{
-            if (!context.secondPart) {
+            if (!context.secondScan) {
                 context.changeState(new ReverseTurn1());
             } else {
                 decision = drone.stop();

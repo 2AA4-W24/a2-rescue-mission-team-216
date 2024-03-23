@@ -4,15 +4,15 @@ import org.json.JSONObject;
 
 public class CheckGrnd implements State{
 
-    private Compass compass;
     private JSONObject decision;
 
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
 
         if(checker.hasGrnd()){
+
             JSONObject response = checker.getResp();
-            context.range = response.getInt("range"); //extracting the range
+            context.range = response.getInt("range");
 
             if(context.getLastEchoDirection().equals("F")){
                 decision = drone.fly();
@@ -24,18 +24,13 @@ public class CheckGrnd implements State{
             else {
                 decision = drone.turnRight();
             }
-            context.changeState(new ExtractRange());
+
+            context.changeState(new Move2Grnd());
         }
 
-        //will return empty decisions
-        else if (context.getLastEchoDirection().equals("F")){
+        else if (context.getLastEchoDirection().equals("F")){ //implies you are in phase3
 
-            if(context.phase3){
-                context.changeState(new Turn1());
-            }
-            else{
-                context.changeState(new EchoL());
-            }
+            context.changeState(new Turn1());
             decision = null;
 
         } else if (context.getLastEchoDirection().equals("L")) {

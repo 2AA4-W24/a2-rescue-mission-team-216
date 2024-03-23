@@ -11,17 +11,9 @@ import org.json.JSONTokener;
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
-    //private JSONObject response = new JSONObject();
     JSONObject extraInfo;
     private MMContext MarineMission;
-    int c = 700;
-    private Drone drone; //move this into marine mission and only reference marine mission via mission
-
-//    private Mission mission;
-//
-//    public Explorer(Mission mission) {
-//        this.mission = mission;
-//    }
+    private Drone drone;
 
     @Override
 
@@ -30,12 +22,9 @@ public class Explorer implements IExplorerRaid {
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}", info.toString(2));
 
-        // Initialize an instance of the Drone class
-
-        // Get the direction and battery level from the Drone object
         drone = new Drone(s);
         String direction = drone.getDirection();
-        Integer batteryLevel = drone.getBatteryLevel();
+        Integer batteryLevel = drone.getBattery();
 
         MarineMission = new MMContext(drone);
 
@@ -47,7 +36,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
 
-        if (drone.getBatteryLevel() >= 30){
+        if (drone.getBattery() >= 30){
             decision = MarineMission.takeDecision();
         }
         else{
@@ -63,26 +52,31 @@ public class Explorer implements IExplorerRaid {
 
 
     @Override
-    public void acknowledgeResults(String s) { //takes in the string which is the decision made
-        //returns nothing? interface specification won't allow return statements? I think?
+    public void acknowledgeResults(String s) {
+
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n" + response.toString(2));
+
         Integer cost = response.getInt("cost");
         drone.updateBattery(cost);
         logger.info("The cost of the action was {}", cost);
-        logger.info("The current battery is {}", drone.getBatteryLevel());
+
+        logger.info("The current battery is {}", drone.getBattery());
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
+
         logger.info("The drone is facing {}", drone.getDirection());
+
         extraInfo = response.getJSONObject("extras");
         MarineMission.transmitMsg(response);
+
         logger.info("Additional information received: {}", extraInfo);
         logger.info("Final Report {}", deliverFinalReport());
     }
 
     @Override
     public String deliverFinalReport() {
-        String s = ("Sites: "+MarineMission.Sites+" Creeks: "+MarineMission.Creeks); //temppp
+        String s = ("Sites: "+MarineMission.getSites() + " Creeks: " + MarineMission.getCreeks()); //temppp
         return s;
     }
 

@@ -8,13 +8,13 @@ import java.io.StringReader;
 
 class Drone {
     private String direction;
-    private String init_direction;
+    private final String init_direction;
     private double x = 0;
     private double y = 0;
     private Integer batteryLevel;
-    private Radar radar; // Adding a Radar instance variable
+    private final Radar radar; // Adding a Radar instance variable
     private JSONObject decision;
-    private JSONObject parameters;
+    private final JSONObject parameters;
 
 
     public Drone(String initializationInfo) { //class constructor
@@ -32,7 +32,7 @@ class Drone {
         return direction;
     }
 
-    public Integer getBatteryLevel() {
+    public Integer getBattery() {
         return batteryLevel;
     }
 
@@ -80,7 +80,7 @@ class Drone {
         return decision;
     }
 
-    //echoing
+    //echoing methods from radar
     public JSONObject echoFwd() {
         decision = radar.echoFwd(direction);
         return decision;
