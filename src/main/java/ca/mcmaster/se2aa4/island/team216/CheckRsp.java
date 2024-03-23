@@ -5,9 +5,6 @@ import org.json.JSONObject;
 
 class CheckRsp {
 
-    public JSONArray creeks = new JSONArray();
-    public JSONArray sites = new JSONArray();
-
     JSONObject extraInfo = new JSONObject();
 
     public JSONObject getResp(){
@@ -25,35 +22,36 @@ class CheckRsp {
     }
 
 
-    public boolean hasCreeks(){
-        if (extraInfo.has("creeks")) {
+    public JSONArray checkCreeks(){ //change to checkCreeks
+        /*if (extraInfo.has("creeks")) {
             JSONArray creekID = extraInfo.getJSONArray("creeks");
-            if (!creekID.isEmpty()) {
-                creeks.put(creekID);
-                return true;
+
+            for (Object o : creekID) {
+                creeks.put(o);
             }
+
+        }*/
+        JSONArray creekID = new JSONArray();
+        if (extraInfo.has("creeks")) {
+            creekID = extraInfo.getJSONArray("creeks");
         }
-        return false;
+        return (creekID);
     }
 
-    public boolean hasSites(){
-        if (extraInfo.has("sites")) {
+    public JSONArray checkSites(){ //change to checkSites
+        /*if (extraInfo.has("sites")) {
             JSONArray siteID = extraInfo.getJSONArray("sites");
             if (!siteID.isEmpty()) {
-                sites.put(siteID);
-                return true;
+                sites = siteID;
             }
+        }*/
+
+        JSONArray siteID = new JSONArray();
+        if (extraInfo.has("sites")) {
+            siteID = extraInfo.getJSONArray("sites");
         }
-        return false;
+        return (siteID);
     }
-
-
-//} else if (extraInfo.has("sites")) {
-//        JSONArray siteID = extraInfo.getJSONArray("sites");
-//        if (siteID.length() != 0) {
-//        sites.put(siteID);
-//        }
-//        }
 
     public boolean hasOcean() {
         boolean ocean = false;

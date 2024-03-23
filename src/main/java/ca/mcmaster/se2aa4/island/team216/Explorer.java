@@ -54,11 +54,9 @@ public class Explorer implements IExplorerRaid {
             decision = drone.stop();
         }
 
-        logger.info("Creeks: {}", MarineMission.getCreeks());
-        logger.info("Sites: {}", MarineMission.getSites());
-
         logger.info("Coordinates: {}", drone.coords());
         logger.info("** Decision: {}", decision.toString());
+
         return decision.toString();
     }
 
@@ -71,7 +69,6 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n" + response.toString(2));
         Integer cost = response.getInt("cost");
         drone.updateBattery(cost);
-
         logger.info("The cost of the action was {}", cost);
         logger.info("The current battery is {}", drone.getBatteryLevel());
         String status = response.getString("status");
@@ -80,11 +77,13 @@ public class Explorer implements IExplorerRaid {
         extraInfo = response.getJSONObject("extras");
         MarineMission.transmitMsg(response);
         logger.info("Additional information received: {}", extraInfo);
+        logger.info("Final Report {}", deliverFinalReport());
     }
 
     @Override
     public String deliverFinalReport() {
-        return "no creek found";
+        String s = ("Sites: "+MarineMission.Sites+" Creeks: "+MarineMission.Creeks); //temppp
+        return s;
     }
 
 }

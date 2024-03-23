@@ -12,8 +12,8 @@ public class ExtractRange implements State{
             context.range--;
         }
         else {
-            context.changeState(new GridFly());
-            decision = drone.scan();
+            context.changeState(new Scan());
+            decision = null;
         }
         return decision;
     }

@@ -8,12 +8,9 @@ public class Runner {
 
     public static void main(String[] args) {
         String filename = args[0];
-//        Mission marineMission = new MarineMission();
-
 
         try {
 
-//            Explorer explorer = new Explorer(marineMission);
             run(Explorer.class)
                     .exploring(new File(filename))
                     .withSeed(42L)

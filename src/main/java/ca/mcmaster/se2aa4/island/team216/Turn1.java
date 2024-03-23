@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class Turn1 implements State{
+public class Turn1 implements State{ //rename uturn1?
     JSONObject decision;
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
