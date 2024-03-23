@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.island.team216;
 
-public class POI { //closest creek?
+public class ClosestCreek {
     double siteX;
     double siteY;
 

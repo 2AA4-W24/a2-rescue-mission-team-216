@@ -5,7 +5,8 @@ import org.json.JSONObject;
 public class ReverseTurn1 implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        context.switchDir(); //temp
+
+        context.switchDir();
 
         JSONObject decision;
 

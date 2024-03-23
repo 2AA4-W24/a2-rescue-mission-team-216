@@ -30,7 +30,7 @@ public class CheckGrnd implements State{
 
         else if (context.getLastEchoDirection().equals("F")){ //implies you are in phase3
 
-            context.changeState(new Turn1());
+            context.changeState(new UTurn1());
             decision = null;
 
         } else if (context.getLastEchoDirection().equals("L")) {

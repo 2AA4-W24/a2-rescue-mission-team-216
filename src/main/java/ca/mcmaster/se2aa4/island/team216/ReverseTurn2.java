@@ -13,6 +13,7 @@ public class ReverseTurn2 implements State{
         } else {
             decision = drone.turnRight();
         }
+
         context.changeState(new Scan());
         context.secondScan = true;
         context.switchDir();
