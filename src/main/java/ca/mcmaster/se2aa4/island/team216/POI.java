@@ -1,23 +1,23 @@
-//package ca.mcmaster.se2aa4.island.team216;
-//
-//
-//
-//public class POI {
-//    double x;
-//    double y;
-//
-//
-//    private double calcRange(x, y){
-//        double z;
-//        z = Math.sqrt(x*x + y*y);
-//        return z;
-//
-//
-//
-//    }
-//
-//    private double[] calcOffset(double x1, double x2, double y1, double y2){
-//
-//
-//    }
-//}
+package ca.mcmaster.se2aa4.island.team216;
+
+
+
+public class POI {
+    double siteX;
+    double siteY;
+    double offsetX;
+    double offsetY;
+
+
+    private double calcRange(){
+        double z;
+        z = Math.sqrt(offsetX*offsetX + offsetY*offsetY);
+        return z;
+
+    }
+
+    private double[] calcOffset(double creekX, double creekY){
+        offsetX = Math.abs(creekX-siteX);
+        offsetY = Math.abs(creekY - siteY);
+    }
+}
