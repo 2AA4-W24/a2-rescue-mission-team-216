@@ -14,7 +14,8 @@ class MMContext {
     private JSONObject decision;
     private String lastEchoed = "";
     public Integer range = -1;
-    private Object rescueCreek = null;
+    //private Object rescueCreek = null;
+    public Object rescueCreek = null;
 
     private Boolean turnLeft = true;
     public Boolean turnComplete = false;
@@ -22,9 +23,9 @@ class MMContext {
 
     private JSONArray creeks = new JSONArray();
     private JSONArray sites = new JSONArray();
-    private HashMap<Object, double[]> CreekLocation = new HashMap<>();
-    private HashMap<JSONArray, double[]> SiteLocation = new HashMap<>();
-    private HashMap<Object, double[]> Distance = new HashMap<>();
+    private HashMap<Object, Double[]> CreekLocation = new HashMap<>();
+    private HashMap<JSONArray, Double[]> SiteLocation = new HashMap<>();
+    private HashMap<Object, Double[]> Distance = new HashMap<>();
 
     public MMContext(Drone drone) {
         this.state = new EchoL();
@@ -69,7 +70,7 @@ class MMContext {
     }
 
     public void updateCreeks(JSONArray creekID) {
-        double[] coords = drone.coords();
+        Double[] coords = drone.coords();
         for (Object o : creekID) {
             CreekLocation.put(o,coords);
             creeks.put(o);
@@ -77,7 +78,7 @@ class MMContext {
     }
 
     public void updateSites(JSONArray siteID) {
-        double[] coords = drone.coords();
+        Double[] coords = drone.coords();
         SiteLocation.put(siteID, coords);
         sites = siteID;
     }
@@ -92,10 +93,10 @@ class MMContext {
         return sites;
     }
 
-    public HashMap<Object, double[]> getCreekLocation(){
+    public HashMap<Object, Double[]> getCreekLocation(){
         return CreekLocation;
     }
-    public HashMap<JSONArray, double[]> getSiteLocation(){
+    public HashMap<JSONArray, Double[]> getSiteLocation(){
         return SiteLocation;
     }
 

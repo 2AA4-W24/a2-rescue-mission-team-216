@@ -75,7 +75,7 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        String s = ("Sites: "+MarineMission.getSites() + " Creeks: " + MarineMission.getCreeks()); //temppp
+        String s = (/*"Sites: "+MarineMission.getSites() + " Creeks: \n" + MarineMission.getCreeks() + */"Closest Creek: "+MarineMission.rescueCreek); //temppp
         return s;
     }
 

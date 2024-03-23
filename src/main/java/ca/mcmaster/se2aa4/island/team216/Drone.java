@@ -9,8 +9,8 @@ import java.io.StringReader;
 class Drone {
     private String direction;
     private final String init_direction;
-    private double x = 0;
-    private double y = 0;
+    private Double x = 0.0;
+    private Double y = 0.0;
     private Integer batteryLevel;
     private final Radar radar; // Adding a Radar instance variable
     private JSONObject decision;
@@ -40,25 +40,30 @@ class Drone {
         this.batteryLevel -= cost;
     }
     public JSONObject turnRight() {
-        this.direction = Compass.right(direction);
+        updateCoords();
 
+        this.direction = Compass.right(direction);
         decision.put("parameters", parameters.put("direction", direction));
         decision.put("action", "heading");
+
+        updateCoords();
 
         return decision;
     }
 
     public JSONObject turnLeft() {
-        this.direction = Compass.left(direction);
+        updateCoords();
 
+        this.direction = Compass.left(direction);
         decision.put("parameters", parameters.put("direction", direction));
         decision.put("action", "heading");
+
+        updateCoords();
 
         return decision;
     }
 
-    public JSONObject fly(){
-
+    private void updateCoords() {
         if (direction.equals(init_direction)) {
             this.x += 1;
         } else if (direction.equals(Compass.left(init_direction))) {
@@ -68,7 +73,11 @@ class Drone {
         } else {
             this.x -= 1;
         }
+    }
 
+    public JSONObject fly(){
+
+        updateCoords();
         decision.put("action", "fly");
 
         return decision;
@@ -100,8 +109,8 @@ class Drone {
         return decision;
     }
 
-    public double[] coords() {
-        double[] arr = {this.x, this.y};
+    public Double[] coords() {
+        Double[] arr = {this.x, this.y};
         return arr;
     }
 

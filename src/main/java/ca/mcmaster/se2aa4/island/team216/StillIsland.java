@@ -23,10 +23,10 @@ class StillIsland implements State{
 
                 ClosestCreek locate = new ClosestCreek();
 
-                HashMap<Object, double[]> creeks = context.getCreekLocation();
-                HashMap<JSONArray, double[]> sites = context.getSiteLocation();
+                HashMap<Object, Double[]> creeks = context.getCreekLocation();
+                HashMap<JSONArray, Double[]> sites = context.getSiteLocation();
 
-                HashMap<Object, double> distance = locate.calculateDistance(creeks, sites);
+                HashMap<Object, Double> distance = locate.calculateDistance(creeks, sites);
                 Object closestCreek = locate.rescueCreek(distance); //what now?
                 context.rescueCreek(closestCreek);
 

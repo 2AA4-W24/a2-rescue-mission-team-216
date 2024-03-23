@@ -6,15 +6,11 @@ import org.json.JSONArray;
 
 import java.util.HashMap;
 
-
 class ClosestCreek {
-    HashMap<Object, double> distance;
+    HashMap<Object, Double> distance = new HashMap<>();
     private final Logger logger = LogManager.getLogger();
 
-
-
-
-    public HashMap<Object, double> calculateDistance(HashMap<Object, double[]> Creeks, HashMap<JSONArray, double[]> Sites) {
+    public HashMap<Object, Double> calculateDistance(HashMap<Object, Double[]> Creeks, HashMap<JSONArray, Double[]> Sites) {
 
         JSONArray siteID = Sites.keySet().iterator().next();
 
@@ -22,20 +18,26 @@ class ClosestCreek {
             return null;
         }
 
-        double[] siteCoords = Sites.get(siteID);
+        Double[] siteCoords = Sites.get(siteID);
 
-        double xSite = siteCoords[0];
-        double ySite = siteCoords[1];
-
+        Double xSite = siteCoords[0];
+        Double ySite = siteCoords[1];
+//        logger.info("Site X {}", xSite);
+//        logger.info("Site Y {}", ySite);
 
         for (Object creekID : Creeks.keySet()) {
-            double[] creekCoords = Creeks.get(creekID);
-            double xCreek = creekCoords[0];
-            double yCreek = creekCoords[1];
+            Double[] creekCoords = Creeks.get(creekID);
+            Double xCreek = creekCoords[0];
+            Double yCreek = creekCoords[1];
 
             // Calculate distance using Pythagorean theorem
-            double len = Math.sqrt(Math.pow(xCreek - xSite, 2) + Math.pow(yCreek - ySite, 2));
-            double length = Math.abs(len);
+            Double len = Math.sqrt(Math.pow(xCreek - xSite, 2) + Math.pow(yCreek - ySite, 2));
+            Double length = Math.abs(len);
+//            logger.info("Creek {}", creekID);
+//            logger.info("X {}", xCreek);
+//            logger.info("Y {}", yCreek);
+//            logger.info("len {}", len);
+//            logger.info("length {}", length);
 
             distance.put(creekID, length);
 
@@ -45,8 +47,8 @@ class ClosestCreek {
 
     }
 
-    public Object rescueCreek(HashMap<Object, double> distance){
-        double minDistance = Integer.MAX_VALUE;
+    public Object rescueCreek(HashMap<Object, Double> distance){
+        Double minDistance = Double.MAX_VALUE;
         Object closestCreek = null;
 
         if (distance == null){
@@ -55,11 +57,12 @@ class ClosestCreek {
         }
 
         for (Object creekID : distance.keySet()) {
-            double dist = distance.get(creekID);
+            Double dist = distance.get(creekID);
             if (dist < minDistance){
-                dist = minDistance;
+                minDistance = dist;
                 closestCreek = creekID;
             }
+//            logger.info("Min distance: {}", minDistance);
         }
 
         return closestCreek;
@@ -69,18 +72,3 @@ class ClosestCreek {
 
 
 }
-
-//    private double calcDistance(double offsetX, double offsetY) {
-//        double distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
-//        return distance;
-//
-//    }
-//
-//    private double[] calcOffset(double creekX, double creekY) {
-//        double offsetX = Math.abs(creekX - siteX);
-//        double offsetY = Math.abs(creekY - siteY);
-//        double[] arr = {offsetX, offsetY};
-//
-//        return arr;
-//    }
-//
