@@ -2,6 +2,8 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MMContext {
 
@@ -19,6 +21,9 @@ public class MMContext {
     public Boolean secondPart = false; //temporary
     public JSONArray creeks = new JSONArray(); //CHANGE BACK TO PRIV
     public JSONArray sites = new JSONArray(); //CHANGE BACK TO PRIV
+    public HashMap<Object, double[]> Creeks = new HashMap<>();
+    public HashMap<JSONArray, double[]> Sites = new HashMap<>();
+    private double[] distances;
 
     public MMContext(Drone drone) {
         //this.state = new EchoF(); // Initial state is echoing fwd
@@ -66,13 +71,15 @@ public class MMContext {
     public void updateCreeks(JSONArray creekID) {
         double[] coords = drone.coords();
         //add to hashmap
-        creeks.put(creekID); //temp
+        for (Object o : creekID) {
+            Creeks.put(o,coords);
+        }
     }
 
     public void updateSites(JSONArray siteID) {
         double[] coords = drone.coords();
         //add to hashmap
-        sites = siteID; //temp
+        Sites.put(siteID, coords);
     }
 
 }

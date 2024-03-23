@@ -82,7 +82,7 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        String s = ("Sites: "+MarineMission.sites+" Creeks: "+MarineMission.creeks); //temppp
+        String s = ("Sites: "+MarineMission.Sites+" Creeks: "+MarineMission.Creeks); //temppp
         return s;
     }
 

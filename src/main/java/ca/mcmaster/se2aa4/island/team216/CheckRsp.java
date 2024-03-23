@@ -5,9 +5,6 @@ import org.json.JSONObject;
 
 class CheckRsp {
 
-    //public JSONArray creeks = new JSONArray();
-    //public JSONArray sites = new JSONArray();
-
     JSONObject extraInfo = new JSONObject();
 
     public JSONObject getResp(){
