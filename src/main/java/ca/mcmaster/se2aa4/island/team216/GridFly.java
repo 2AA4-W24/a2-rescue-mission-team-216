@@ -7,8 +7,6 @@ public class GridFly implements State {
 
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        checker.hasCreeks();
-        checker.hasSites();
 
         context.phase3 = true;
 
@@ -21,8 +19,6 @@ public class GridFly implements State {
                 context.changeState(new Scan());
             }
         }
-        //decision = drone.fly();
-        //context.changeState(new Scan());
 
         return decision;
     }
