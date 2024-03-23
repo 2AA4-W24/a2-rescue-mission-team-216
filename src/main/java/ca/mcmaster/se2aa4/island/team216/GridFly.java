@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class GridFly implements State {
+class GridFly implements State {
     JSONObject decision;
 
     @Override

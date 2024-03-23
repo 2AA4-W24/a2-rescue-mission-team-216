@@ -11,7 +11,6 @@ import org.json.JSONTokener;
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
-    JSONObject extraInfo;
     private MMContext MarineMission;
     private Drone drone;
 
@@ -67,7 +66,7 @@ public class Explorer implements IExplorerRaid {
 
         logger.info("The drone is facing {}", drone.getDirection());
 
-        extraInfo = response.getJSONObject("extras");
+        JSONObject extraInfo = response.getJSONObject("extras");
         MarineMission.transmitMsg(response);
 
         logger.info("Additional information received: {}", extraInfo);

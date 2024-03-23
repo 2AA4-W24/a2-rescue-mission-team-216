@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class UTurn2 implements State{
+class UTurn2 implements State{
 
     JSONObject decision;
 

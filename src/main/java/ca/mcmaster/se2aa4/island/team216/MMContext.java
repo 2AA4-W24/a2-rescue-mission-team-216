@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MMContext {
+class MMContext {
 
     //mandatory
     private State state;

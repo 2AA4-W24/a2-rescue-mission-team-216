@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.island.team216;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-public class AddPOIs implements State{
+class AddPOIs implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
 

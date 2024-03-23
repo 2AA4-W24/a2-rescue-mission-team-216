@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class EchoF implements State {
+class EchoF implements State {
 
 
     @Override

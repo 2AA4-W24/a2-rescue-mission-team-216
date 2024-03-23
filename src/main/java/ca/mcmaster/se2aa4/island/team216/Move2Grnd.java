@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class Move2Grnd implements State{
+class Move2Grnd implements State{
     JSONObject decision;
 
     @Override

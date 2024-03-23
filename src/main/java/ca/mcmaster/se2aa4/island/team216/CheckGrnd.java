@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class CheckGrnd implements State{
+class CheckGrnd implements State{
 
     private JSONObject decision;
 
@@ -28,7 +28,7 @@ public class CheckGrnd implements State{
             context.changeState(new Move2Grnd());
         }
 
-        else if (context.getLastEchoDirection().equals("F")){ //implies you are in phase3
+        else if (context.getLastEchoDirection().equals("F")){ //implies you are in the middle of grid search
 
             context.changeState(new UTurn1());
             decision = null;

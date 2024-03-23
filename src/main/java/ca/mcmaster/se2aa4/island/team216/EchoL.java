@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 
-public class EchoL implements State{
+class EchoL implements State{
 
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
