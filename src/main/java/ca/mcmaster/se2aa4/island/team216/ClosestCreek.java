@@ -16,12 +16,12 @@ class ClosestCreek {
 
         JSONArray siteID = Sites.keySet().iterator().next();
 
-        if (siteID == null){ //no key exists in the HashMap
+        /*if (siteID == null){ //no key exists in the HashMap
             Object creek1 = Creeks.keySet().iterator().next();
             distance.put(creek1, -1.0);
             logger.info("no sites found, therefore closest creek defaults to first one found");
             return distance;
-        }
+        }*/
 
         Double[] siteCoords = Sites.get(siteID);
 
