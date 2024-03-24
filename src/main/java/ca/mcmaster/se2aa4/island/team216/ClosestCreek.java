@@ -8,11 +8,22 @@ import java.util.HashMap;
 
 
 class ClosestCreek {
-    HashMap<Object, Double> distance = new HashMap<>();
+    private HashMap<Object, Double[]> Creeks = new HashMap<>();
+    private HashMap<JSONArray, Double[]> Sites = new HashMap<>();
+    private HashMap<Object, Double> distance = new HashMap<>();
     private final Logger logger = LogManager.getLogger();
 
+    public void updateCreeks(JSONArray creekID, Double[] coords) {
+        for (Object o : creekID) {
+            Creeks.put(o,coords);
+        }
+    }
 
-    public HashMap<Object, Double> calculateDistance(HashMap<Object, Double[]> Creeks, HashMap<JSONArray, Double[]> Sites) {
+    public void updateSites(JSONArray siteID, Double[] coords) {
+        Sites.put(siteID, coords);
+    }
+
+    private void calculateDistance() {
 
         JSONArray siteID = Sites.keySet().iterator().next();
 
@@ -46,15 +57,13 @@ class ClosestCreek {
             logger.info("length {}", length);
 
             distance.put(creekID, length);
-
         }
-
-        return distance;
-
     }
 
-    public Object rescueCreek(HashMap<Object, Double> distance){
-        double minDistance = Integer.MAX_VALUE;
+    public Object rescueCreek(){
+        calculateDistance();
+
+        double minDistance = Double.MAX_VALUE;
         Object closestCreek = null;
 
         for (Object creekID : distance.keySet()) {

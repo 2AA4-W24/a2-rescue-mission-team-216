@@ -10,22 +10,18 @@ class MMContext {
     //mandatory
     private State state;
     private Drone drone;
+
     private CheckRsp checker = new CheckRsp();
+    private ClosestCreek CC = new ClosestCreek();
+
     private JSONObject decision;
     private String lastEchoed = "";
     public Integer range = -1;
-    //private Object rescueCreek = null;
     public Object rescueCreek = null;
 
     private Boolean turnLeft = true;
     public Boolean turnComplete = false;
-    public Boolean secondScan = false; //temporary
-
-    private JSONArray creeks = new JSONArray();
-    private JSONArray sites = new JSONArray();
-    private HashMap<Object, Double[]> CreekLocation = new HashMap<>();
-    private HashMap<JSONArray, Double[]> SiteLocation = new HashMap<>();
-    private HashMap<Object, Double[]> Distance = new HashMap<>();
+    public Boolean secondScan = false;
 
     public MMContext(Drone drone) {
         this.state = new EchoL();
@@ -69,39 +65,16 @@ class MMContext {
         return turnLeft;
     }
 
-    public void updateCreeks(JSONArray creekID) {
-        Double[] coords = drone.coords();
-        for (Object o : creekID) {
-            CreekLocation.put(o,coords);
-            creeks.put(o);
-        }
+    public void updateCreeks(JSONArray creekID, Double[] coords) {
+        CC.updateCreeks(creekID, coords);
     }
 
-    public void updateSites(JSONArray siteID) {
-        Double[] coords = drone.coords();
-        SiteLocation.put(siteID, coords);
-        sites = siteID;
+    public void updateSites(JSONArray siteID, Double[] coords) {
+        CC.updateSites(siteID, coords);
     }
-
-
-    //to print in the final report
-    public JSONArray getCreeks(){
-        return creeks;
-    }
-
-    public JSONArray getSites(){
-        return sites;
-    }
-
-    public HashMap<Object, Double[]> getCreekLocation(){
-        return CreekLocation;
-    }
-    public HashMap<JSONArray, Double[]> getSiteLocation(){
-        return SiteLocation;
-    }
-
-    public void rescueCreek(Object creek){
-        rescueCreek = creek;
+    public void rescueCreek(){
+        Object closestCreek = CC.rescueCreek();
+        rescueCreek = closestCreek;
     }
 
 }
