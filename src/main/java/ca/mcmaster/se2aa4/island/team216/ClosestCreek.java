@@ -27,8 +27,8 @@ class ClosestCreek {
 
         double xSite = siteCoords[0];
         double ySite = siteCoords[1];
-//            logger.info("Site X {}", xSite);
-//            logger.info("Site Y {}", ySite);
+        logger.info("Site X {}", xSite);
+        logger.info("Site Y {}", ySite);
 
 
         for (Object creekID : Creeks.keySet()) {
@@ -39,12 +39,11 @@ class ClosestCreek {
             // Calculate distance using Pythagorean theorem
             double len = Math.sqrt(Math.pow(xCreek - xSite, 2) + Math.pow(yCreek - ySite, 2));
             double length = Math.abs(len);
-//            logger.info("Creek {}", creekID);
-//            logger.info("X {}", xCreek);
-//            logger.info("Y {}", yCreek);
-//            logger.info("len {}", len);
-//            logger.info("length {}", length);
-            //random comment
+            logger.info("Creek {}", creekID);
+            logger.info("X {}", xCreek);
+            logger.info("Y {}", yCreek);
+            logger.info("len {}", len);
+            logger.info("length {}", length);
 
             distance.put(creekID, length);
 
@@ -61,10 +60,10 @@ class ClosestCreek {
         for (Object creekID : distance.keySet()) {
             double dist = distance.get(creekID);
             if (dist < minDistance){
-                dist = minDistance;
+                minDistance = dist;
                 closestCreek = creekID;
             }
-            //            logger.info("Min distance: {}", minDistance);
+            logger.info("Min distance: {}", minDistance);
 
         }
         return closestCreek;
