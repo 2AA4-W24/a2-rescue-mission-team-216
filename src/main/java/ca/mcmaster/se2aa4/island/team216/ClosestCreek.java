@@ -6,33 +6,39 @@ import org.json.JSONArray;
 
 import java.util.HashMap;
 
+
 class ClosestCreek {
-    HashMap<Object, Double> distance = new HashMap<>();
+    HashMap<Object, Double> distance;
     private final Logger logger = LogManager.getLogger();
+
 
     public HashMap<Object, Double> calculateDistance(HashMap<Object, Double[]> Creeks, HashMap<JSONArray, Double[]> Sites) {
 
         JSONArray siteID = Sites.keySet().iterator().next();
 
         if (siteID == null){ //no key exists in the HashMap
-            return null;
+            Object creek1 = Creeks.keySet().iterator().next();
+            distance.put(creek1, -1.0);
+            logger.info("no sites found, therefore closest creek defaults to first one found");
+            return distance;
         }
 
         Double[] siteCoords = Sites.get(siteID);
 
-        Double xSite = siteCoords[0];
-        Double ySite = siteCoords[1];
-//        logger.info("Site X {}", xSite);
-//        logger.info("Site Y {}", ySite);
+        double xSite = siteCoords[0];
+        double ySite = siteCoords[1];
+//            logger.info("Site X {}", xSite);
+//            logger.info("Site Y {}", ySite);
+
 
         for (Object creekID : Creeks.keySet()) {
             Double[] creekCoords = Creeks.get(creekID);
-            Double xCreek = creekCoords[0];
-            Double yCreek = creekCoords[1];
+            double xCreek = creekCoords[0];
+            double yCreek = creekCoords[1];
 
             // Calculate distance using Pythagorean theorem
-            Double len = Math.sqrt(Math.pow(xCreek - xSite, 2) + Math.pow(yCreek - ySite, 2));
-            Double length = Math.abs(len);
+            double len = Math.sqrt(Math.pow(xCreek - xSite, 2) + Math.pow(yCreek - ySite, 2));
+            double length = Math.abs(len);
 //            logger.info("Creek {}", creekID);
 //            logger.info("X {}", xCreek);
 //            logger.info("Y {}", yCreek);
@@ -48,27 +54,22 @@ class ClosestCreek {
     }
 
     public Object rescueCreek(HashMap<Object, Double> distance){
-        Double minDistance = Double.MAX_VALUE;
+        double minDistance = Integer.MAX_VALUE;
         Object closestCreek = null;
 
-        if (distance == null){
-            logger.info("No sites found, therefore the default closest creek is the first creek found");
-            return null; //fix this
-        }
-
         for (Object creekID : distance.keySet()) {
-            Double dist = distance.get(creekID);
+            double dist = distance.get(creekID);
             if (dist < minDistance){
-                minDistance = dist;
+                dist = minDistance;
                 closestCreek = creekID;
             }
-//            logger.info("Min distance: {}", minDistance);
-        }
+            //            logger.info("Min distance: {}", minDistance);
 
+        }
         return closestCreek;
 
     }
 
-
-
 }
+
+
