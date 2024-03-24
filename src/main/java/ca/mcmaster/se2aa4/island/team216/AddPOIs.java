@@ -9,13 +9,14 @@ class AddPOIs implements State{
 
         JSONArray creekID = checker.checkCreeks();
         JSONArray siteID = checker.checkSites();
+        Double[] coords = drone.coords();
 
         if (!creekID.isEmpty()) {
-            context.updateCreeks(creekID);
+            context.updateCreeks(creekID, coords);
         }
 
         if (!siteID.isEmpty()) {
-            context.updateSites(siteID);
+            context.updateSites(siteID, coords);
         }
 
         context.changeState(new GridFly());
