@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 
 class ClosestCreek {
-    HashMap<Object, Double> distance;
+    HashMap<Object, Double> distance = new HashMap<>();
     private final Logger logger = LogManager.getLogger();
 
 
