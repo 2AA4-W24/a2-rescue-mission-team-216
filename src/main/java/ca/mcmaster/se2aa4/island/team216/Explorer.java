@@ -21,14 +21,15 @@ public class Explorer implements IExplorerRaid {
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}", info.toString(2));
 
-        drone = new Drone(s);
-        String direction = drone.getDirection();
-        Integer batteryLevel = drone.getBattery();
-
-        MarineMission = new MMContext(drone);
+        String direction = info.getString("heading");
+        Integer batteryLevel = info.getInt("budget");
 
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
+
+        drone = new Drone(direction, batteryLevel);
+
+        MarineMission = new MMContext(drone);
     }
 
     @Override

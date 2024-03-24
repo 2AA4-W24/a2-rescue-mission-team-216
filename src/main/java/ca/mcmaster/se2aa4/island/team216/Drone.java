@@ -17,11 +17,10 @@ class Drone {
     private final JSONObject parameters;
 
 
-    public Drone(String initializationInfo) { //class constructor
-        JSONObject info = new JSONObject(new JSONTokener(new StringReader(initializationInfo)));
-        this.init_direction = info.getString("heading");
-        this.direction = info.getString("heading");
-        this.batteryLevel = info.getInt("budget");
+    public Drone(String dir, Integer battery) { //class constructor
+        this.init_direction = dir;
+        this.direction = dir;
+        this.batteryLevel = battery;
         this.radar = new Radar();
         this.decision = new JSONObject();
         this.parameters = new JSONObject();

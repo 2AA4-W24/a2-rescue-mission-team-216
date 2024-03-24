@@ -23,7 +23,7 @@ class ClosestCreek {
         Sites.put(siteID, coords);
     }
 
-    private void calculateDistance() {
+    void calculateDistance() {
 
         JSONArray siteID = Sites.keySet().iterator().next();
 
@@ -75,6 +75,7 @@ class ClosestCreek {
             logger.info("Min distance: {}", minDistance);
 
         }
+
         return closestCreek;
 
     }
