@@ -21,16 +21,7 @@ class StillIsland implements State{
 
             } else {
 
-                ClosestCreek locate = new ClosestCreek();
-
-                HashMap<Object, Double[]> creeks = context.getCreekLocation();
-                HashMap<JSONArray, Double[]> sites = context.getSiteLocation();
-
-                HashMap<Object, Double> distance = locate.calculateDistance(creeks, sites);
-                Object closestCreek = locate.rescueCreek(distance); //what now?
-                context.rescueCreek(closestCreek);
-
-                decision = drone.stop();
+                context.changeState(new ExtractCreek());
 
             }
         }
