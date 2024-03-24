@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class ExtractCreek implements State{
     @Override
     public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        
+
         ClosestCreek locate = new ClosestCreek();
 
         HashMap<Object, Double[]> creeks = context.getCreekLocation();
