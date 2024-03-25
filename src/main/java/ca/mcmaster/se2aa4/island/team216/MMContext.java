@@ -77,4 +77,7 @@ class MMContext {
         rescueCreek = closestCreek;
     }
 
+    public Object getState() {
+        return state;
+    }
 }

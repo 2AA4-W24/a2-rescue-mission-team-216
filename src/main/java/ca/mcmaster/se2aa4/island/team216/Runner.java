@@ -5,6 +5,7 @@ import static eu.ace_design.island.runner.Runner.run;
 import java.io.File;
 
 public class Runner {
+    private static Explorer explorer;
 
     public static void main(String[] args) {
         String filename = args[0];
@@ -28,4 +29,11 @@ public class Runner {
         }
     }
 
+    public static Explorer getExplorerInstance() {
+        return explorer;
+    }
+
+    public String startingAt(int x, int y, String direction) {
+        return "Starting position set at (" + x + ", " + y + ") facing " + direction;
+    }
 }
