@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ExtractCreek implements State{
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         context.rescueCreek();
 

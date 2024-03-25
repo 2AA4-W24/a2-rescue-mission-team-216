@@ -6,7 +6,7 @@ class Move2Grnd implements State{
     JSONObject decision;
 
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         if (context.range > 0){
             decision = drone.fly();

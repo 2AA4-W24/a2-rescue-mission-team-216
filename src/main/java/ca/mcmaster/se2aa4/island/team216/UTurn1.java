@@ -5,7 +5,7 @@ import org.json.JSONObject;
 class UTurn1 implements State{ //rename uturn1?
     JSONObject decision;
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         if (context.turnLeft()) {
             decision = drone.turnLeft();

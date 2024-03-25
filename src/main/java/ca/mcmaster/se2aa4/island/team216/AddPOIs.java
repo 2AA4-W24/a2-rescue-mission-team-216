@@ -5,7 +5,7 @@ import org.json.JSONArray;
 
 class AddPOIs implements State{
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         JSONArray creekID = checker.checkCreeks();
         JSONArray siteID = checker.checkSites();

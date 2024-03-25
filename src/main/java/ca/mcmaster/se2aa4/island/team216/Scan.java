@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 class Scan implements State{
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         context.changeState(new AddPOIs());
         return drone.scan();

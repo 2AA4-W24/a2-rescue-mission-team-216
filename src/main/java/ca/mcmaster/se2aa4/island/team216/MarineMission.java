@@ -2,17 +2,15 @@ package ca.mcmaster.se2aa4.island.team216;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import java.util.HashMap;
-import java.util.Map;
 
-class MMContext {
+class MarineMission {
 
     //mandatory
     private State state;
-    private Drone drone;
+    private final Drone drone;
 
-    private CheckRsp checker = new CheckRsp();
-    private ClosestCreek CC = new ClosestCreek();
+    private final CheckRsp checker = new CheckRsp();
+    private final ClosestCreek cc = new ClosestCreek();
 
     private JSONObject decision;
     private String lastEchoed = "";
@@ -23,7 +21,7 @@ class MMContext {
     public Boolean turnComplete = false;
     public Boolean secondScan = false;
 
-    public MMContext(Drone drone) {
+    public MarineMission(Drone drone) {
         this.state = new EchoL();
         this.drone = drone;
     }
@@ -66,15 +64,14 @@ class MMContext {
     }
 
     public void updateCreeks(JSONArray creekID, Double[] coords) {
-        CC.updateCreeks(creekID, coords);
+        cc.updateCreeks(creekID, coords);
     }
 
     public void updateSites(JSONArray siteID, Double[] coords) {
-        CC.updateSites(siteID, coords);
+        cc.updateSites(siteID, coords);
     }
     public void rescueCreek(){
-        Object closestCreek = CC.rescueCreek();
-        rescueCreek = closestCreek;
+        rescueCreek = cc.rescueCreek();
     }
 
     public Object getState() {

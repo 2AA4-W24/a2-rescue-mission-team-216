@@ -7,7 +7,7 @@ class UTurn2 implements State{
     JSONObject decision;
 
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         if (context.turnLeft()) {
             decision = drone.turnLeft();

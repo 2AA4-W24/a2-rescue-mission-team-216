@@ -7,8 +7,7 @@ import java.util.HashMap;
 
 class StillIsland implements State{
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
-        JSONObject decision = null;
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         if(checker.hasGrnd()) {
             JSONObject response = checker.getResp();
@@ -25,6 +24,6 @@ class StillIsland implements State{
 
             }
         }
-        return decision;
+        return null;
     }
 }

@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class FaceGround implements State{
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         JSONObject decision;
         JSONObject response = checker.getResp();

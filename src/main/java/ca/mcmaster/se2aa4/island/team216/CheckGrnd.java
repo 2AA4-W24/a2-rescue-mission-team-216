@@ -7,7 +7,7 @@ class CheckGrnd implements State{
     private JSONObject decision;
 
     @Override
-    public JSONObject handle(MMContext context, Drone drone, CheckRsp checker) {
+    public JSONObject handle(MarineMission context, Drone drone, CheckRsp checker) {
 
         if (checker.hasGrnd()) {
             context.changeState(new FaceGround());

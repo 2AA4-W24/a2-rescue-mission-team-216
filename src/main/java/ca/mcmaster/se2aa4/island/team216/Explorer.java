@@ -11,7 +11,7 @@ import org.json.JSONTokener;
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
-    private MMContext MarineMission;
+    private MarineMission mm;
     private Drone drone;
 
     @Override
@@ -29,7 +29,7 @@ public class Explorer implements IExplorerRaid {
 
         drone = new Drone(direction, batteryLevel);
 
-        MarineMission = new MMContext(drone);
+        mm = new MarineMission(drone);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject decision = new JSONObject();
 
         if (drone.getBattery() >= 30){
-            decision = MarineMission.takeDecision();
+            decision = mm.takeDecision();
         }
         else{
             decision = drone.stop();
@@ -68,7 +68,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The drone is facing {}", drone.getDirection());
 
         JSONObject extraInfo = response.getJSONObject("extras");
-        MarineMission.transmitMsg(response);
+        mm.transmitMsg(response);
 
         logger.info("Additional information received: {}", extraInfo);
         logger.info("Final Report {}", deliverFinalReport());
@@ -76,7 +76,7 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        String s = (/*"Sites: "+MarineMission.getSites() + " Creeks: \n" + MarineMission.getCreeks() + */"Closest Creek: "+MarineMission.rescueCreek); //temppp
+        String s = ("Closest Creek: "+mm.rescueCreek);
         return s;
     }
 

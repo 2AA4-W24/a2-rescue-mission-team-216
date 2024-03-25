@@ -4,6 +4,6 @@ import org.json.JSONObject;
 
 public interface State {
 
-    JSONObject handle(MMContext context, Drone drone, CheckRsp checker);
+    JSONObject handle(MarineMission context, Drone drone, CheckRsp checker);
 
 }
